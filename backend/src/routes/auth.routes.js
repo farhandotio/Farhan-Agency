@@ -3,11 +3,12 @@ import * as authController from "../controllers/auth.controllers.js";
 import * as validationRules from "../middlewares/validation.middlewares.js";
 import passport from "passport";
 import multer from "multer";
+import { VerifyToken, isAdmin, isUser } from "../middlewares/auth.middlewares.js";
 
 const upload = multer({ storage: multer.memoryStorage() });
-
 const router = express.Router();
 
+// 🟢 Public Routes
 router.post(
   "/register",
   upload.single("picture"),
@@ -21,21 +22,23 @@ router.post(
   authController.login
 );
 
-// Route to initiate Google OAuth flow
+// Google OAuth
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-// Callback route that Google will redirect to after authentication
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false }),
   authController.googleOAuthCallback
 );
 
-router.get("/profile", authController.getProfile);
+// 🔒 Protected Routes
+router.get("/profile", VerifyToken, isUser, authController.getProfile);
 
-router.post("/logout", authController.logout);
+router.get("/all-users", VerifyToken, isAdmin, authController.getAllUsers);
+
+router.post("/logout", VerifyToken, authController.logout);
 
 export default router;
