@@ -1,54 +1,35 @@
-import React from "react";
-
-const services = [
-  {
-    title: "Frontend Development",
-    description:
-      "Modern, responsive interfaces built with React, Vue, and cutting-edge technologies for optimal user experience.",
-    image:
-      "https://ik.imagekit.io/farhansadik/Agency%20Assets/backend.png?updatedAt=1761820474466",
-    altText:
-      "Frontend development icon showing layered UI elements symbolizing modern responsive design.",
-  },
-  {
-    title: "Backend Development",
-    description:
-      "Scalable server architectures, APIs, and database solutions that power your applications reliably.",
-    image:
-      "https://ik.imagekit.io/farhansadik/Agency%20Assets/b.jpg?updatedAt=1761820473781",
-    altText:
-      "Backend development icon showing database and server stacks representing robust architecture.",
-  },
-  {
-    title: "Fullstack Solutions",
-    description:
-      "End-to-end development from concept to deployment, handling every aspect of your digital product.",
-    image:
-      "https://ik.imagekit.io/farhansadik/Agency%20Assets/fullstack.png?updatedAt=1761751361946",
-    altText:
-      "Fullstack solutions icon illustrating complete web app workflow from frontend to backend.",
-  },
-  {
-    title: "UI/UX Design & Prototyping",
-    description:
-      "Pixel-perfect UI/UX designs and interactive prototypes built with Figma and Framer to deliver seamless user experiences.",
-    image:
-      "https://ik.imagekit.io/farhansadik/Agency%20Assets/an.png?updatedAt=1761820473987",
-    altText:
-      "UI/UX design icon showing wireframe and color palette representing creative design process.",
-  },
-  {
-    title: "Animation & Interaction Development",
-    description:
-      "Engaging motion graphics, GSAP animations, and 3D interactions using Three.js and Framer Motion for next-level web experiences.",
-    image:
-      "https://ik.imagekit.io/farhansadik/Agency%20Assets/fr.jpg?updatedAt=1761820473771",
-    altText:
-      "Animation development icon showing fluid motion elements representing GSAP and interactive web design.",
-  },
-];
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ServiceSection = () => {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/services");
+        // Maximum 5 services
+        setServices((data.data || data).slice(0, 5));
+      } catch (err) {
+        console.error("Error fetching services:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-[400px] flex justify-center items-center">
+        <p className="text-text text-lg">Loading services...</p>
+      </div>
+    );
+  }
+
   return (
     <section
       className="py-16 md:py-24 bg-bg"
@@ -57,11 +38,11 @@ const ServiceSection = () => {
       itemType="https://schema.org/Service"
     >
       <div className="mx-auto px-5 sm:px-7 lg:px-10">
-        {/* === Header Section === */}
+        {/* Header Section */}
         <header className="mb-16 md:mb-24">
           <h2
             id="services-heading"
-            className="text-4xl md:text-5xl font-extrabold text-text tracking-tight  mb-8"
+            className="text-4xl md:text-5xl font-extrabold text-text tracking-tight mb-8"
           >
             Our Services
           </h2>
@@ -74,11 +55,12 @@ const ServiceSection = () => {
           </p>
         </header>
 
-        {/* === Service Cards === */}
+        {/* Service Cards */}
         <div className="grid grid-cols-1 md:grid-cols-7 gap-5" role="list">
           {services.map((service, index) => (
-            <article
-              key={index}
+            <Link
+              to={`/services/${service.slug}`}
+              key={service._id}
               className={`bg-cardBg p-5 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out border border-border hover:bg-hoverCardBg ${
                 index === 0 && "grid md:col-span-2"
               } ${index === 1 && "grid md:col-span-2"} ${
@@ -93,8 +75,8 @@ const ServiceSection = () => {
             >
               <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-lg bg-indigo-50 text-3xl">
                 <img
-                  src={service.image}
-                  alt={service.altText}
+                  src={service.heroImageUrl}
+                  alt={service.title}
                   loading="lazy"
                   decoding="async"
                   width="64"
@@ -115,14 +97,13 @@ const ServiceSection = () => {
                 className="text-mutedText leading-relaxed"
                 itemProp="description"
               >
-                {service.description}
+                {service.heroDescription}
               </p>
-            </article>
+            </Link>
           ))}
         </div>
       </div>
 
-      {/* Hidden meta-style SEO enhancement */}
       <meta
         name="description"
         content="Farhan Agency offers expert Frontend, Backend, and Fullstack Development Services — building scalable, high-performance digital products for businesses worldwide."
