@@ -9,7 +9,7 @@ const processSteps = [
     id: 1,
     step: "Step 1",
     iconName: "document",
-    iconBgColor: "teal-500",
+    iconBgColor: "bg-teal-500",
     title: "Software Requirements Specification (SRS)",
     week: "Week 1",
     description:
@@ -40,7 +40,7 @@ const processSteps = [
     id: 2,
     step: "Step 2",
     iconName: "squares",
-    iconBgColor: "orange-500",
+    iconBgColor: "bg-orange-500",
     title: "Low-Fidelity Wireframes",
     week: "Week 2",
     description:
@@ -70,7 +70,7 @@ const processSteps = [
     id: 3,
     step: "Step 3",
     iconName: "puzzle",
-    iconBgColor: "purple-500",
+    iconBgColor: "bg-purple-500",
     title: "Interactive Prototype",
     week: "Week 3-4",
     description:
@@ -97,7 +97,7 @@ const processSteps = [
     id: 4,
     step: "Step 4",
     iconName: "rocket",
-    iconBgColor: "green-500",
+    iconBgColor: "bg-green-500",
     title: "MVP Development Plan",
     week: "Week 4",
     description:
@@ -124,7 +124,7 @@ const processSteps = [
     id: 5,
     step: "Step 5",
     iconName: "flow-chart",
-    iconBgColor: "blue-500",
+    iconBgColor: "bg-blue-500",
     title: "User Flow Mapping",
     week: "Week 5",
     description:
@@ -151,7 +151,7 @@ const processSteps = [
     id: 6,
     step: "Step 6",
     iconName: "api",
-    iconBgColor: "purple-500",
+    iconBgColor: "bg-purple-500",
     title: "API Documentation",
     week: "Week 6",
     description:
@@ -178,7 +178,7 @@ const processSteps = [
     id: 7,
     step: "Step 7",
     iconName: "credit-card",
-    iconBgColor: "green-500",
+    iconBgColor: "bg-green-500",
     title: "Payment & Delivery",
     week: "Week 7-8",
     description:

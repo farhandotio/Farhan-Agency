@@ -58,13 +58,13 @@ const ProcessCard = ({ stepData, isLast }) => {
     <div className="relative flex items-start gap-4 md:gap-5 pb-12">
       <div className="flex flex-col items-center h-110 md:h-80">
         <div
-          className={`size-8 md:size-16 rounded-lg md:rounded-2xl flex items-center justify-center p-1.5 md:p-3 shadow-md bg-${iconBgColor}`}
+          className={`size-8 md:size-16 rounded-lg md:rounded-2xl flex items-center justify-center p-1.5 md:p-3 shadow-md ${iconBgColor}`}
         >
           <IconMapper iconName={iconName} className="size-full text-text" />
         </div>
         {/* {!isLast && ( */}
         <div
-          className={`h-full w-1 rounded-full bg-linear-to-t  bg-${iconBgColor} from-cardBg mt-4`}
+          className={`h-full w-1 rounded-full bg-linear-to-t ${iconBgColor} from-cardBg mt-4`}
         ></div>
         {/* )} */}
       </div>
@@ -72,7 +72,9 @@ const ProcessCard = ({ stepData, isLast }) => {
       <div className="flex-1 bg-bg p-4 md:p-5 rounded-xl shadow-lg border border-border">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <span className="bg-hoverCardBg text-primary text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap">
+            <span
+              className={`${iconBgColor} text-white text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap`}
+            >
               {step}
             </span>
             <h3 className="text-xl md:text-2xl font-bold text-text">{title}</h3>

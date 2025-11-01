@@ -91,7 +91,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-cardBg  max-w-[1900px] mx-auto text-mutedText">
+    <footer className="max-w-[1900px] mx-auto text-mutedText">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

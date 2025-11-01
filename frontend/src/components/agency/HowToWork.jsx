@@ -7,42 +7,49 @@ const steps = [
     shortTitle: "SRS",
     longTitle: "Requirements & Planning",
     description:
-      "We gather project goals, define scope, and create a detailed plan for execution. This phase includes creating a detailed Software Requirements Specification (SRS) document, setting clear milestones, and allocating resources.",
+      "Collect project goals, scope and technical requirements; produce a complete Software Requirements Specification (SRS) with architecture overview, feature specs and DB schema.",
   },
   {
     id: 2,
     shortTitle: "Wireframe",
-    longTitle: "Design & Prototype",
+    longTitle: "Low-Fidelity Wireframes",
     description:
-      "We design the layout, visuals, and user flow to define your product’s structure. This involves creating wireframes, mockups, and a clickable prototype to ensure the user experience (UX) meets your strategic goals.",
+      "Create structural blueprints (Figma/Sketch) showing layout, navigation and information architecture to validate structure and user journeys.",
   },
   {
     id: 3,
-    shortTitle: "MVP",
-    longTitle: "Prototype & Review",
+    shortTitle: "Prototype",
+    longTitle: "Interactive Prototype",
     description:
-      "We build a functional demo version (Minimum Viable Product) for client testing and early feedback. The MVP focuses on core features, allowing for rapid iteration and validation before full-scale development.",
+      "Build a high-fidelity, clickable prototype with interactions, animations and user-testing scenarios for usability validation and design feedback.",
   },
   {
     id: 4,
-    shortTitle: "Payment",
-    longTitle: "50% Upfront Payment",
+    shortTitle: "MVP Plan",
+    longTitle: "MVP Development Plan",
     description:
-      "After MVP approval, 50% payment confirms the start of full development. This financial commitment allows us to scale the development team and commence the rigorous coding phase.",
+      "Define core features, prioritize scope and set a development timeline — includes resource allocation and a launch strategy for the Minimum Viable Product.",
   },
   {
     id: 5,
-    shortTitle: "Development",
-    longTitle: "Build & Testing",
+    shortTitle: "User Flow",
+    longTitle: "User Flow Mapping",
     description:
-      "We develop the full product, optimize performance, and ensure quality testing. This includes backend engineering, frontend implementation, continuous integration, and exhaustive quality assurance (QA).",
+      "Document detailed user journeys, decision points, edge cases and error handling to optimize conversion paths and overall UX flow.",
   },
   {
     id: 6,
-    shortTitle: "Deployment",
-    longTitle: "Launch & Final Payment",
+    shortTitle: "API Doc",
+    longTitle: "API Documentation",
     description:
-      "We deploy the project live, deliver all source files, and receive the final 50% payment. Post-launch support and monitoring are initiated to ensure stability and smooth operation.",
+      "Provide comprehensive documentation for API endpoints, data structures, authentication and integration examples for developers and integrators.",
+  },
+  {
+    id: 7,
+    shortTitle: "Delivery",
+    longTitle: "Payment & Delivery",
+    description:
+      "Define payment milestones (e.g., 50% upfront, 50% on delivery), deliver source code, deployment guidelines, docs and include a post-launch support period.",
   },
 ];
 

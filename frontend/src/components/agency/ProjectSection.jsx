@@ -4,7 +4,6 @@ import { IoArrowDown } from "react-icons/io5";
 import { FiArrowUpRight } from "react-icons/fi";
 import axios from "axios";
 
-// ProjectCard component - handles both Mobile (Card with Image) and Desktop (Row with Hover Effect) views
 const HoverProjectCard = ({
   project,
   onMouseEnter,
@@ -13,7 +12,6 @@ const HoverProjectCard = ({
   isDesktop,
   isLast,
 }) => {
-  // Mobile View: A standard card layout with a visible image
   if (!isDesktop) {
     return (
       <div className="bg-cardBg rounded-xl overflow-hidden shadow-lg mb-4 cursor-pointer transition-transform hover:scale-[1.02] duration-300 border border-border p-5">
@@ -31,7 +29,6 @@ const HoverProjectCard = ({
     );
   }
 
-  // Desktop View: Row-based list with invisible image hover effect
   const borderClass = isLast ? "" : "border-b border-border";
 
   return (
@@ -182,7 +179,7 @@ const ProjectSection = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
-            isDesktop={isDesktop} // Pass isDesktop prop
+            isDesktop={isDesktop}
             isLast={index === projects.length - 1}
           />
         ))}
@@ -198,7 +195,6 @@ const ProjectSection = () => {
             style={{
               left: mousePosition.x,
               top: mousePosition.y,
-              // Offsets the image to be centered horizontally and placed above the cursor
               transform: "translate(-50%, calc(-100% - 10px))",
             }}
           >

@@ -83,7 +83,7 @@ const Testimonials = () => {
             </h2>
             <Link
               to={"/reviews"}
-              className="flex whitespace-nowrap h-fit max-md:hidden w-fit mx-auto gap-2 bg-cardBg hover:bg-primary text-text font-semibold px-6 py-3 rounded-full transition-all"
+              className="flex whitespace-nowrap h-fit max-md:hidden w-fit mx-auto gap-2 hover:bg-cardBg hover:text-primary text-text font-semibold px-6 py-3 rounded-full transition-all"
               aria-label="Contact Farhan Agency"
             >
               <span> All Reviews </span>{" "}
@@ -101,7 +101,7 @@ const Testimonials = () => {
           {testimonials.map((t) => (
             <article
               key={t.id}
-              className="relative group shrink-0 bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.04)] p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="relative group shrink-0 bg-cardBg border border-border p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
               <div className="flex max-md:flex-col items-start gap-4">
                 <img
