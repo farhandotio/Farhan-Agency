@@ -11,18 +11,15 @@
   --color-text: #e5e7eb;
 
   --color-border: #2d2d2d;
-  --color-outline: #3b82f6;
+  --color-outline: #0da34e;
 
   --color-mutedText: #9ca3af;
-  --color-highlight: #fbbf24;
-  --color-inputBg: #111827;
-  --color-placeholder: #6b7280;
+  --color-inputBg: #1f1f1f;
 
   --color-danger: #ef4444;
   --color-success: #22c55e;
   --color-warning: #eab308;
   --color-warningBg: #ffae0009;
-  --color-info: #3b82f6;
 
   --color-hoverSecondary: #ff6200;
   --color-hoverPrimary: #0ac25a;
@@ -38,18 +35,14 @@
   --color-text: #010101;
 
   --color-border: #d1d5db;
-  --color-outline: #3b82f6;
 
   --color-mutedText: #2c2d2f;
-  --color-highlight: #f59e0b;
   --color-inputBg: #f9fafb;
-  --color-placeholder: #9ca3af;
 
   --color-danger: #b91c1c;
   --color-success: #16a34a;
   --color-warning: #ca8a04;
   --color-warningBg: #ffae0009;
-  --color-info: #2563eb;
 
   --color-hoverPrimary: #0ac25a;
   --color-hoverSecondary: #ff6200;
@@ -61,17 +54,19 @@ body {
   color: var(--color-text);
   font-family: var(--font-family);
 }
-input,
-textarea,
-select {
+.input,
+.textarea,
+.select {
   background-color: var(--color-inputBg);
   color: var(--color-text);
   border: 1px solid var(--color-border);
+  transition: all 0.2s;
+  border-radius: 10px;
 }
-input:focus,
-textarea:focus,
-select:focus {
-  border: none;
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border: 1px solid var(--color-outline);
   outline: 1px solid var(--color-outline);
 }
 

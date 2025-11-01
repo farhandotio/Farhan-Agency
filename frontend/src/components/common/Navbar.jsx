@@ -10,6 +10,7 @@ const Navbar = () => {
     { name: "PROJECTS", href: "/projects" },
     { name: "PROCESS", href: "/process" },
     { name: "ABOUT", href: "/about" },
+    { name: "CONTACT", href: "/contact" },
   ];
 
   return (
@@ -24,7 +25,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-5 lg:space-x-12">
+        <nav className="hidden lg:flex items-center space-x-5 lg:space-x-12">
           <ul className="flex space-x-6 lg:space-x-8 uppercase text-sm md:text-xs lg:text-sm font-medium tracking-wide">
             {navLinks.map((link) => (
               <li key={link.name}>
@@ -55,7 +56,7 @@ const Navbar = () => {
         {/* Mobile MENU button */}
         <button
           onClick={() => setMenuOpen(true)}
-          className="md:hidden uppercase text-sm font-semibold tracking-wider border-2 border-primary px-5 py-2 rounded-full hover:bg-hoverPrimary hover:text-white transition duration-300"
+          className="lg:hidden uppercase text-sm font-semibold tracking-wider border-2 border-primary px-5 py-2 rounded-full hover:bg-hoverPrimary hover:text-white transition duration-300"
         >
           Menu
         </button>
