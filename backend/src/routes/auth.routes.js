@@ -3,7 +3,11 @@ import * as authController from "../controllers/auth.controllers.js";
 import * as validationRules from "../middlewares/validation.middlewares.js";
 import passport from "passport";
 import multer from "multer";
-import { VerifyToken, isAdmin, isUser } from "../middlewares/auth.middlewares.js";
+import {
+  VerifyToken,
+  isAdmin,
+  isUser,
+} from "../middlewares/auth.middlewares.js";
 
 const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();

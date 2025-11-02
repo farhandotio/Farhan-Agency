@@ -26,34 +26,85 @@ const sendTokenCookie = (res, token) => {
 
 export async function register(req, res) {
   try {
-    const {
-      email,
-      password,
-      fullname: { firstName, lastName } = {},
-    } = req.body;
+    // ===================
+    // 1️⃣ Extract fields
+    // ===================
+    const email = req.body.email;
+    const password = req.body.password;
+
+    // Handle fullname from FormData
+    let firstName =
+      req.body["fullname.firstName"] || req.body.fullname?.firstName;
+    let lastName = req.body["fullname.lastName"] || req.body.fullname?.lastName;
 
     if (!email || !password || !firstName || !lastName) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    // ===================
+    // 2️⃣ Check existing user
+    // ===================
     const isUserExist = await userModel.findOne({ email });
-    if (isUserExist)
+    if (isUserExist) {
       return res.status(400).json({ message: "User already exists" });
+    }
 
+    // ===================
+    // 3️⃣ Handle picture
+    // ===================
     let pictureUrl = null;
-    if (req.file) {
+
+    // multer uploaded file
+    if (req.file && req.file.buffer) {
       try {
         const base64 = req.file.buffer.toString("base64");
         const fileStr = `data:${req.file.mimetype};base64,${base64}`;
-        const uploadResp = await uploadFile(fileStr, req.file.originalname);
-        pictureUrl = uploadResp.url || uploadResp.filePath || null;
+        const uploadResp = await uploadFile(
+          fileStr,
+          req.file.originalname || `upload-${Date.now()}`
+        );
+        pictureUrl =
+          uploadResp?.url ||
+          uploadResp?.secure_url ||
+          uploadResp?.filePath ||
+          null;
       } catch (err) {
-        console.error("Profile image upload failed:", err);
+        console.error("Profile image upload failed (multer):", err);
+      }
+    }
+    // JSON / URL from body
+    else if (req.body.file || req.body.picture) {
+      const fileFromBody = req.body.file || req.body.picture;
+      try {
+        if (typeof fileFromBody === "string") {
+          if (
+            fileFromBody.startsWith("data:") &&
+            fileFromBody.includes("base64,")
+          ) {
+            const uploadResp = await uploadFile(
+              fileFromBody,
+              `upload-${Date.now()}`
+            );
+            pictureUrl =
+              uploadResp?.url ||
+              uploadResp?.secure_url ||
+              uploadResp?.filePath ||
+              null;
+          } else {
+            pictureUrl = fileFromBody;
+          }
+        } else if (typeof fileFromBody === "object" && fileFromBody.url) {
+          pictureUrl = fileFromBody.url;
+        }
+      } catch (err) {
+        console.error("Error processing fileFromBody:", err);
       }
     }
 
+    // ===================
+    // 4️⃣ Create user
+    // ===================
     const hash = await bcrypt.hash(password, 10);
-
     const user = await userModel.create({
       email,
       password: hash,
@@ -61,6 +112,9 @@ export async function register(req, res) {
       fullname: { firstName, lastName },
     });
 
+    // ===================
+    // 5️⃣ Send token & response
+    // ===================
     const token = generateToken(user);
     sendTokenCookie(res, token);
 
@@ -94,11 +148,9 @@ export async function login(req, res) {
 
     // If user was created via Google and has no password
     if (!user.password) {
-      return res
-        .status(400)
-        .json({
-          message: "Account registered via Google. Please login with Google.",
-        });
+      return res.status(400).json({
+        message: "Account registered via Google. Please login with Google.",
+      });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
