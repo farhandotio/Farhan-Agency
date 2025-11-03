@@ -1,10 +1,8 @@
-import React from "react";
 import MainRoutes from "./routes/MainRoutes";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
-import ChatPopup from "./components/chat/ChatPopup";
-import DraggableChatButton from "./components/chat/DraggableChatButton";
+import ChatButton from "./components/chat/ChatButton";
 
 const App = () => {
   return (
@@ -16,11 +14,8 @@ const App = () => {
         </div>
         <Footer />
 
-        {/* Draggable Chat Button */}
-        <DraggableChatButton />
-
-        {/* Global Chat Popup */}
-        <ChatPopup />
+        {/* Chat Button */}
+        <ChatButton />
       </div>
     </BrowserRouter>
   );
