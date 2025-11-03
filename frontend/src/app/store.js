@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     counters: counterReducer,
     auth: authReducer,
-    chat: chatReducer
+    chat: chatReducer,
   },
 });
 

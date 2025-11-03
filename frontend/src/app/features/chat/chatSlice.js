@@ -4,6 +4,7 @@ const initialState = {
   isOpen: false,
   messages: [],
   isTyping: false,
+  socket: null,
 };
 
 const chatSlice = createSlice({
@@ -16,12 +17,11 @@ const chatSlice = createSlice({
     closeChat: (state) => {
       state.isOpen = false;
     },
+    setSocket: (state, action) => {
+      state.socket = action.payload;
+    },
     addMessage: (state, action) => {
-      state.messages.push({
-        sender: action.payload.sender,
-        text: action.payload.text,
-        time: new Date().toLocaleTimeString(),
-      });
+      state.messages.push(action.payload);
     },
     setTyping: (state, action) => {
       state.isTyping = action.payload;
@@ -32,7 +32,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { openChat, closeChat, addMessage, setTyping, clearChat } =
-  chatSlice.actions;
-
+export const { openChat, closeChat, setSocket, addMessage, setTyping, clearChat } = chatSlice.actions;
 export default chatSlice.reducer;

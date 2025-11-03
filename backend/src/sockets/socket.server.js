@@ -3,21 +3,31 @@ import jwt from "jsonwebtoken";
 import conversationModel from "../models/conversation.model.js";
 import userModel from "../models/user.model.js";
 import config from "../config/config.js";
+import cookie from "cookie"; // npm install cookie
 
 function initialSocketServer(httpServer) {
   const io = new Server(httpServer, {
-    cors: { origin: "*", methods: ["GET", "POST"] },
+    cors: {
+      origin: "http://localhost:5173", // frontend origin
+      methods: ["GET", "POST"],
+      credentials: true, // allow cookies
+    },
   });
 
-  // ===== Socket Authentication =====
+  // ===== Socket Authentication via cookies =====
   io.use(async (socket, next) => {
     try {
-      const token = socket.handshake.auth?.token;
+      const cookies = socket.handshake.headers.cookie;
+      if (!cookies) return next(new Error("Authentication error: no cookies"));
+
+      const parsedCookies = cookie.parse(cookies);
+      const token = parsedCookies.token; // name of your cookie storing JWT
       if (!token) return next(new Error("Authentication error: token missing"));
 
       const payload = jwt.verify(token, config.JWT_SECRET);
-      const user = await userModel.findById(payload.id).select("fullname email role");
-
+      const user = await userModel
+        .findById(payload.id)
+        .select("fullname email role");
       if (!user) return next(new Error("Authentication error: user not found"));
 
       socket.user = { id: user._id.toString(), role: user.role };
@@ -29,7 +39,9 @@ function initialSocketServer(httpServer) {
   });
 
   io.on("connection", (socket) => {
-    console.log(`🟢 Socket connected ${socket.id} user=${socket.user.id} role=${socket.user.role}`);
+    console.log(
+      `🟢 Socket connected ${socket.id} user=${socket.user.id} role=${socket.user.role}`
+    );
 
     // Join personal room
     socket.join(`user:${socket.user.id}`);
@@ -37,22 +49,51 @@ function initialSocketServer(httpServer) {
     // Admin room
     if (socket.user.role === "admin") socket.join("admins");
 
-    // User sends message
-    socket.on("private_message", async ({ text }) => {
-      if (!text) return;
+    // ===== Load previous conversation =====
+    socket.on("load_previous_chat", async (_, callback) => {
+      try {
+        let conversation = await conversationModel.findOne({
+          userId: socket.user.id,
+        });
+        if (!conversation)
+          conversation = await conversationModel.create({ userId: socket.user.id });
+
+        callback(conversation.messages || []);
+      } catch (err) {
+        console.error("Load previous chat error:", err.message);
+        callback([]);
+      }
+    });
+
+    // ===== Typing indicator =====
+    socket.on("typing", ({ typing }) => {
+      if (socket.user.role !== "admin") {
+        socket.to("admins").emit("typing", { userId: socket.user.id, typing });
+      }
+    });
+
+    // ===== User sends message =====
+    socket.on("private_message", async (message) => {
+      if (!message?.text) return;
 
       try {
-        // Find conversation (auto-create for user)
-        let conversation = await conversationModel.findOne({ userId: socket.user.id });
-        if (!conversation) conversation = await conversationModel.create({ userId: socket.user.id });
+        let conversation = await conversationModel.findOne({
+          userId: socket.user.id,
+        });
+        if (!conversation)
+          conversation = await conversationModel.create({ userId: socket.user.id });
 
-        // Add message
-        const msg = { senderId: socket.user.id, senderRole: socket.user.role, text };
+        const msg = {
+          senderId: message.senderId || socket.user.id,
+          senderRole: message.senderRole || socket.user.role,
+          text: message.text,
+          time: message.time || new Date().toISOString(),
+        };
+
         conversation.messages.push(msg);
-        conversation.lastMessage = text;
+        conversation.lastMessage = msg.text;
         await conversation.save();
 
-        // Emit to user & admin
         io.to(`user:${socket.user.id}`).emit("new_message", msg);
         io.to("admins").emit("new_message", { ...msg, userId: socket.user.id });
       } catch (err) {
