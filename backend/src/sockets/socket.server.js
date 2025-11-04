@@ -3,12 +3,17 @@ import jwt from "jsonwebtoken";
 import conversationModel from "../models/conversation.model.js";
 import userModel from "../models/user.model.js";
 import config from "../config/config.js";
-import cookie from "cookie"; // npm install cookie
+import cookie from "cookie";
 
 function initialSocketServer(httpServer) {
+  const origin =
+    config.NODE_ENV === "production"
+      ? "https://farhanagency.vercel.app"
+      : "http://localhost:5173";
+
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:5173", // frontend origin
+      origin, // dynamic origin
       methods: ["GET", "POST"],
       credentials: true, // allow cookies
     },
@@ -56,7 +61,9 @@ function initialSocketServer(httpServer) {
           userId: socket.user.id,
         });
         if (!conversation)
-          conversation = await conversationModel.create({ userId: socket.user.id });
+          conversation = await conversationModel.create({
+            userId: socket.user.id,
+          });
 
         callback(conversation.messages || []);
       } catch (err) {
@@ -81,7 +88,9 @@ function initialSocketServer(httpServer) {
           userId: socket.user.id,
         });
         if (!conversation)
-          conversation = await conversationModel.create({ userId: socket.user.id });
+          conversation = await conversationModel.create({
+            userId: socket.user.id,
+          });
 
         const msg = {
           senderId: message.senderId || socket.user.id,

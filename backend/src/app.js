@@ -20,12 +20,18 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+const origin =
+  config.NODE_ENV === "production"
+    ? "https://farhanagency.vercel.app"
+    : "http://localhost:5173";
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin,
     credentials: true,
   })
 );
+
 
 // Routes
 app.use("/api/auth", authRoutes);
