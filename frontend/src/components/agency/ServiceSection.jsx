@@ -9,7 +9,9 @@ const ServiceSection = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/services");
+        const { data } = await axios.get(
+          "https://farhan-agency.onrender.com/api/services"
+        );
         // Maximum 5 services
         setServices((data.data || data).slice(0, 5));
       } catch (err) {

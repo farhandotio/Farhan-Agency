@@ -4,7 +4,7 @@ let socket;
 
 export const connectSocket = (token) => {
   if (!socket) {
-    socket = io("http://localhost:3000", {
+    socket = io("https://farhan-agency.onrender.com", {
       auth: { token },
     });
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:3000/api/orders";
+const API_BASE = "https://farhan-agency.onrender.com/api/orders";
 
 // Fetch all orders for logged-in user
 export const fetchOrders = () => {

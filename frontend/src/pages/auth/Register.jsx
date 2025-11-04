@@ -108,10 +108,10 @@ const Register = () => {
     >
       <div className="flex items-center justify-center h-full">
         <div
-          className={`w-full max-w-sm bg-cardBg p-5 sm:p-7 rounded-3xl shadow-2xl transition-all duration-300 transform hover:shadow-3xl border border-border  md:scale-90`}
+          className={`w-full max-w-sm bg-cardBg p-5 sm:p-7 rounded-3xl shadow-2xl transition-all duration-300 transform hover:shadow-3xl border border-border`}
         >
-          <div className="text-center mb-5">
-            <h1 className="text-2xl font-bold text-text">Join Us</h1>
+          <div className="text-center mb-7">
+            <h1 className="text-2xl font-bold text-text">Create Your Account</h1>
           </div>
 
           <form
@@ -119,7 +119,7 @@ const Register = () => {
             onSubmit={handleSubmit(onSubmit)}
             encType="multipart/form-data"
           >
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex items-center gap-2 mb-7">
               <input
                 type="file"
                 id="profilePictureInput"
@@ -157,7 +157,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="firstName"
-                    placeholder="First name"
+                    placeholder="John"
                     className="w-full p-3 pl-12 input"
                     {...register("firstName", {
                       required: "First name is required",
@@ -179,7 +179,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="lastName"
-                    placeholder="Last name"
+                    placeholder="Doe"
                     className="w-full p-3 pl-12 input"
                     {...register("lastName", {
                       required: "Last name is required",
@@ -273,13 +273,13 @@ const Register = () => {
             </button>
           </form>
 
-          <div className="flex items-center my-6">
+          {/* <div className="flex items-center my-6">
             <div className={`grow border-t border-border`}></div>
             <span className={`shrink mx-4 text-mutedText text-xs`}>OR</span>
             <div className={`grow border-t border-border`}></div>
-          </div>
+          </div> */}
 
-          <button
+          {/* <button
             onClick={() => {
               window.location.href =
                 "https://farhanagency.vercel.app/api/auth/google";
@@ -289,7 +289,7 @@ const Register = () => {
           >
             <Chrome className={`w-5 h-5 mr-3 text-primary`} />
             <span className="font-semibold">Sign Up with Google</span>
-          </button>
+          </button> */}
 
           <p className={`mt-4 text-center text-sm text-mutedText`}>
             Already have an account?

@@ -77,7 +77,9 @@ const ProjectSection = () => {
   useEffect(() => {
     async function fetchProject() {
       try {
-        const response = await axios.get("http://localhost:3000/api/projects");
+        const response = await axios.get(
+          "https://farhan-agency.onrender.com/api/projects"
+        );
 
         // --- Logic to show maximum 5 projects ---
         const allProjects = response.data.projects || [];
@@ -167,9 +169,7 @@ const ProjectSection = () => {
       {/* Project List (Conditional rendering for desktop vs. mobile list style) */}
       <div
         className={
-          isDesktop
-            ? "grid grid-cols-1 gap-0"
-            : "grid grid-cols-1 gap-4"
+          isDesktop ? "grid grid-cols-1 gap-0" : "grid grid-cols-1 gap-4"
         }
       >
         {projects.map((project, index) => (

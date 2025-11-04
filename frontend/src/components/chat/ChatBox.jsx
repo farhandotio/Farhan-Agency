@@ -21,8 +21,8 @@ const ChatBox = () => {
   // ===== Socket.io connect & load previous chat =====
   useEffect(() => {
     if (!user) return;
-    
-    const socket = io("http://localhost:3000", {
+
+    const socket = io("https://farhan-agency.onrender.com", {
       withCredentials: true,
     });
 
@@ -87,9 +87,6 @@ const ChatBox = () => {
         minute: "2-digit",
       }),
     };
-
-    // local update
-    setMessages((prev) => [...prev, message]);
 
     // send to server
     socketRef.current.emit("private_message", message);

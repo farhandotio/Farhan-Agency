@@ -6,14 +6,21 @@ import config from "../config/config.js";
 import cookie from "cookie";
 
 function initialSocketServer(httpServer) {
-  const origin =
-    config.NODE_ENV === "production"
-      ? "https://farhanagency.vercel.app"
-      : "http://localhost:5173";
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "https://farhanagency.vercel.app",
+  ];
 
   const io = new Server(httpServer, {
     cors: {
-      origin, // dynamic origin
+      origin: function (origin, callback) {
+        // Postman / curl request e origin null hote pare
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       methods: ["GET", "POST"],
       credentials: true, // allow cookies
     },

@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <div className="fixed h-screen w-full z-10000000 bg-bg flex items-center justify-center p-5 md:p-10">
-      <div className="w-full max-w-sm bg-cardBg p-5 sm:p-7 rounded-3xl shadow-2xl transition-all duration-300 transform hover:shadow-3xl border border-border  md:scale-90">
+      <div className="w-full max-w-sm bg-cardBg p-5 sm:p-7 rounded-3xl shadow-2xl transition-all duration-300 transform hover:shadow-3xl border border-border">
         <div className="text-center mb-5">
           <h1 className="text-2xl font-bold text-text">Welcome Back</h1>
         </div>
@@ -55,7 +55,7 @@ const Login = () => {
             <div className="relative">
               <input
                 type="email"
-                placeholder="admin@farhanagency.com"
+                placeholder="john@gmail.com"
                 className="w-full p-3 pl-12 input"
                 {...register("email", { required: "Email is required" })}
               />
@@ -109,13 +109,13 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="flex items-center my-6">
+        {/* <div className="flex items-center my-6">
           <div className="grow border-t border-border"></div>
           <span className="shrink mx-4 text-mutedText text-xs">OR</span>
           <div className="grow border-t border-border"></div>
-        </div>
+        </div> */}
 
-        <button
+        {/* <button
           onClick={() => {
             window.location.href =
               "https://farhanagency.vercel.app/api/auth/google";
@@ -125,7 +125,7 @@ const Login = () => {
         >
           <Chrome className="w-5 h-5 mr-3 text-primary" />
           <span className="font-semibold">Sign In with Google</span>
-        </button>
+        </button> */}
 
         <p className="mt-4 text-center text-sm text-mutedText">
           Don't have an account?

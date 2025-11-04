@@ -15,7 +15,7 @@ const ServiceDetailsPage = () => {
     const fetchService = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:3000/api/services/${slug}`
+          `https://farhan-agency.onrender.com/api/services/${slug}`
         );
         setService(data.data || data);
         console.log(data.data);
