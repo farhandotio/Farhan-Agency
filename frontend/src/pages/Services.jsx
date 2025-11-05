@@ -24,11 +24,7 @@ const Services = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <p className="text-text text-lg">Loading services...</p>
-      </div>
-    );
+    return null
   }
 
   return (

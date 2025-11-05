@@ -9,20 +9,23 @@ function initialSocketServer(httpServer) {
   const allowedOrigins = [
     "http://localhost:5173",
     "https://farhanagency.vercel.app",
+    "https://farhan-agency.vercel.app",
   ];
 
   const io = new Server(httpServer, {
+    path: "/socket.io",
     cors: {
       origin: function (origin, callback) {
-        // Postman / curl request e origin null hote pare
+        console.log("Socket handshake origin:", origin);
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
+          console.warn("Blocked socket origin:", origin);
           callback(new Error("Not allowed by CORS"));
         }
       },
       methods: ["GET", "POST"],
-      credentials: true, // allow cookies
+      credentials: true,
     },
   });
 

@@ -171,7 +171,6 @@ export async function login(req, res) {
       },
     });
   } catch (err) {
-    console.error("Login error:", err);
     res.status(500).json({ message: "Server error" });
   }
 }
@@ -202,7 +201,6 @@ export async function googleOAuthCallback(req, res) {
     // redirect to frontend
     res.redirect("https://farhanagency.vercel.app/");
   } catch (err) {
-    console.error("Google OAuth callback error:", err);
     res.redirect("https://farhanagency.vercel.app/login?error=oauth");
   }
 }
@@ -233,7 +231,6 @@ export async function getAllUsers(req, res) {
     const users = await userModel.find().select("-password");
     res.status(200).json({ users });
   } catch (err) {
-    console.error("Get all users error:", err);
     res.status(500).json({ message: "Server error" });
   }
 }
@@ -243,7 +240,6 @@ export async function logout(req, res) {
     res.clearCookie("token");
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
-    console.error("Logout error:", err);
     res.status(500).json({ message: "Server error" });
   }
 }
