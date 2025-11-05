@@ -21,7 +21,6 @@ export const VerifyToken = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    console.error("JWT verification failed:", err.message);
     return res.status(401).json({ message: "Invalid or expired token." });
   }
 };
