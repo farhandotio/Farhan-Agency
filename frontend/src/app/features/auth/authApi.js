@@ -2,12 +2,9 @@ import axios from "axios";
 
 export const getUser = async () => {
   try {
-    const { data } = await axios.get(
-      "https://farhan-agency.onrender.com/api/auth/profile",
-      {
-        withCredentials: true,
-      }
-    );
+    const { data } = await axios.get("http://localhost:3000/api/auth/profile", {
+      withCredentials: true,
+    });
     return data.user;
   } catch (error) {
     return null;
@@ -41,7 +38,7 @@ export const registerUser = async (payload) => {
       }
     }
 
-    const url = "https://farhan-agency.onrender.com/api/auth/register";
+    const url = "http://localhost:3000/api/auth/register";
     const { data } = await axios.post(url, body, config);
 
     return data.user;
@@ -59,7 +56,7 @@ export const loginUser = async (payload) => {
       withCredentials: true,
     };
 
-    const url = "https://farhan-agency.onrender.com/api/auth/login";
+    const url = "http://localhost:3000/api/auth/login";
     const { data } = await axios.post(url, payload, config);
 
     return data.user;

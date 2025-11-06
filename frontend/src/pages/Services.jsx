@@ -10,9 +10,7 @@ const Services = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get(
-          "https://farhan-agency.onrender.com/api/services"
-        );
+        const { data } = await axios.get("http://localhost:3000/api/services");
         setServices(data.data || data);
         setLoading(false);
       } catch (err) {
@@ -24,7 +22,7 @@ const Services = () => {
   }, []);
 
   if (loading) {
-    return null
+    return null;
   }
 
   return (

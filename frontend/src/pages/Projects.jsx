@@ -7,9 +7,7 @@ const Projects = () => {
 
   useEffect(() => {
     async function fetchProject() {
-      const data = await axios.get(
-        "https://farhan-agency.onrender.com/api/projects"
-      );
+      const data = await axios.get("http://localhost:3000/api/projects");
 
       setProjects(data.data.projects);
     }
