@@ -24,7 +24,7 @@ const sendTokenCookie = (res, token) => {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     path: "/",
   });
-};
+}; 
 
 // safe helper to get nested fullname fields from FormData or JSON body
 const extractFullname = (body) => {
