@@ -26,18 +26,6 @@ router.post(
   authController.login
 );
 
-// Google OAuth
-router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { session: false }),
-  authController.googleOAuthCallback
-);
-
 // 🔒 Protected Routes
 router.get("/profile", VerifyToken, authController.getProfile);
 

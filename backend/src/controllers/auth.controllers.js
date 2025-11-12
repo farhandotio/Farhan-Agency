@@ -18,7 +18,7 @@ const generateToken = (user) =>
 const sendTokenCookie = (res, token) => {
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: none,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     path: "/",
   });
@@ -242,56 +242,6 @@ export async function login(req, res) {
     res.status(500).json({ message: "Server error" });
   }
 }
-
-export async function googleOAuthCallback(req, res) {
-  try {
-    const googleUser = req.user;
-    if (!googleUser) {
-      console.error("googleOAuthCallback: no req.user");
-      return res.redirect("https://farhanagency.vercel.app/login?error=oauth");
-    }
-
-    const email = googleUser.emails?.[0]?.value?.toLowerCase?.() || null;
-    const googleId = googleUser.id || null;
-
-    let user = null;
-    if (googleId) {
-      user = await userModel.findOne({
-        $or: [{ googleId }, { email }],
-      });
-    } else if (email) {
-      user = await userModel.findOne({ email });
-    }
-
-    if (!user) {
-      const firstName =
-        googleUser.name?.givenName ||
-        googleUser.displayName?.split(" ")?.[0] ||
-        "User";
-      const lastName =
-        googleUser.name?.familyName ||
-        googleUser.displayName?.split(" ")?.slice(1).join(" ") ||
-        "";
-
-      user = await userModel.create({
-        googleId,
-        email,
-        picture: googleUser.photos?.[0]?.value || null,
-        fullname: { firstName, lastName },
-      });
-    }
-
-    const token = generateToken(user);
-    sendTokenCookie(res, token);
-
-    // redirect to frontend
-    res.redirect("https://farhanagency.vercel.app/");
-  } catch (err) {
-    console.error("Google OAuth callback error:", err);
-    res.redirect("https://farhanagency.vercel.app/login?error=oauth");
-  }
-}
-
 // -------------------- PROTECTED ROUTES -------------------- //
 
 export async function getProfile(req, res) {
@@ -328,7 +278,7 @@ export async function logout(req, res) {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: none,
       path: "/",
     });
     res.status(200).json({ message: "Logged out successfully" });
