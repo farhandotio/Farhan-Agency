@@ -1,10 +1,5 @@
-// middlewares/validate.middleware.js
 import { body, validationResult } from "express-validator";
 
-/**
- * Validate Middleware
- * যদি কোনো validation error থাকে, তাহলে 400 সহ error ফেরত দেয়।
- */
 export async function validate(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -13,9 +8,6 @@ export async function validate(req, res, next) {
   next();
 }
 
-/**
- * Auth Validations
- */
 export const registerValidationRules = [
   body("email").isEmail().withMessage("Invalid email address"),
   body("password")
@@ -32,9 +24,6 @@ export const loginValidationRules = [
   validate,
 ];
 
-/**
- * Service Validations
- */
 export const createServiceValidation = [
   body("slug").trim().notEmpty().withMessage("Slug is required"),
   body("title").trim().notEmpty().withMessage("Title is required"),

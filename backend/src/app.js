@@ -3,9 +3,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-// Import routes
 import authRoutes from "./routes/auth.routes.js";
-// import adminRoutes from "./routes/admin.routes.js";
 import projectRoutes from "./routes/project.routes.js";
 import serviceRoutes from "./routes/service.routes.js";
 import orderRoutes from "./routes/order.routes.js";

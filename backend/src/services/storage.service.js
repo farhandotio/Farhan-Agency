@@ -1,10 +1,9 @@
 import ImageKit from "imagekit";
-import config from "../config/config.js";
 
 const imagekit = new ImageKit({
-  publicKey: config.IMAGEKIT_PUBLIC_KEY,
-  privateKey: config.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: config.IMAGEKIT_URL_ENDPOINT,
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 })
 
 async function uploadFile(file, fileName) {

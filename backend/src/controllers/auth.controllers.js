@@ -2,7 +2,6 @@
 import userModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import config from "../config/config.js";
 import uploadFile from "../services/storage.service.js";
 import fs from "fs/promises";
 import path from "path";
@@ -10,7 +9,7 @@ import path from "path";
 // -------------------- AUTH HELPERS -------------------- //
 
 const generateToken = (user) =>
-  jwt.sign({ id: user._id, role: user.role }, config.JWT_SECRET, {
+  jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
 

@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import config from "../config/config.js";
 import userModel from "../models/user.model.js";
 
 export const VerifyToken = async (req, res, next) => {
@@ -11,7 +10,7 @@ export const VerifyToken = async (req, res, next) => {
       .json({ message: "No token provided. Unauthorized." });
 
   try {
-    const payload = jwt.verify(token, config.JWT_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
     const user = await userModel
       .findById(payload.id)
       .select("fullname email role");
