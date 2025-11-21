@@ -176,7 +176,7 @@ const Process = () => {
     provider: {
       "@type": "Person",
       name: "MD Farhan Sadik",
-      url: "https://codexfoli0.netlify.app",
+      url: "https://farhansadik.vercel.app",
     },
     description:
       "Step-by-step web development process by MD Farhan Sadik including planning, wireframing, prototyping, MVP, API documentation, and delivery.",
@@ -207,23 +207,38 @@ const Process = () => {
         <meta name="author" content="MD Farhan Sadik" />
 
         {/* Open Graph */}
-        <meta property="og:title" content="Web Development Process — MD Farhan Sadik" />
+        <meta
+          property="og:title"
+          content="Web Development Process — MD Farhan Sadik"
+        />
         <meta
           property="og:description"
           content="Step-by-step web development process by MD Farhan Sadik including planning, wireframing, prototyping, MVP, API documentation, and delivery."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://codexfoli0.netlify.app/process" />
-        <meta property="og:image" content="https://codexfoli0.netlify.app/og-image.png" />
+        <meta
+          property="og:url"
+          content="https://farhansadik.vercel.app/process"
+        />
+        <meta
+          property="og:image"
+          content="https://farhansadik.vercel.app/og-image.png"
+        />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Web Development Process — MD Farhan Sadik" />
+        <meta
+          name="twitter:title"
+          content="Web Development Process — MD Farhan Sadik"
+        />
         <meta
           name="twitter:description"
           content="Complete step-by-step web development process by MD Farhan Sadik for modern and scalable projects."
         />
-        <meta name="twitter:image" content="https://codexfoli0.netlify.app/og-image.png" />
+        <meta
+          name="twitter:image"
+          content="https://farhansadik.vercel.app/og-image.png"
+        />
 
         {/* JSON-LD */}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>

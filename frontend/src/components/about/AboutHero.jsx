@@ -6,7 +6,7 @@ const AboutHero = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "MD Farhan Sadik",
-    url: "https://codexfoli0.netlify.app",
+    url: "https://farhansadik.vercel.app",
     jobTitle: "Frontend & Fullstack Web Developer",
     description:
       "MD Farhan Sadik is a passionate web developer transforming ideas into exceptional digital experiences that drive business growth and user engagement.",
@@ -32,23 +32,38 @@ const AboutHero = () => {
         <meta name="author" content="MD Farhan Sadik" />
 
         {/* Open Graph */}
-        <meta property="og:title" content="About Farhan Sadik — Web Developer" />
+        <meta
+          property="og:title"
+          content="About Farhan Sadik — Web Developer"
+        />
         <meta
           property="og:description"
           content="Discover the journey and expertise of MD Farhan Sadik, a frontend and fullstack developer building high-performance digital experiences."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://codexfoli0.netlify.app/about" />
-        <meta property="og:image" content="https://codexfoli0.netlify.app/og-about.png" />
+        <meta
+          property="og:url"
+          content="https://farhansadik.vercel.app/about"
+        />
+        <meta
+          property="og:image"
+          content="https://farhansadik.vercel.app/og-about.png"
+        />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Farhan Sadik — Web Developer" />
+        <meta
+          name="twitter:title"
+          content="About Farhan Sadik — Web Developer"
+        />
         <meta
           name="twitter:description"
           content="MD Farhan Sadik is a passionate frontend and fullstack developer creating high-performance digital experiences."
         />
-        <meta name="twitter:image" content="https://codexfoli0.netlify.app/og-about.png" />
+        <meta
+          name="twitter:image"
+          content="https://farhansadik.vercel.app/og-about.png"
+        />
 
         {/* JSON-LD structured data */}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>

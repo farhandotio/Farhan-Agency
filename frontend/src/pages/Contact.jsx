@@ -21,23 +21,38 @@ const Contact = () => {
         <meta name="author" content="MD Farhan Sadik" />
 
         {/* Open Graph / Social Sharing */}
-        <meta property="og:title" content="Contact MD Farhan Sadik — Fullstack Developer" />
+        <meta
+          property="og:title"
+          content="Contact MD Farhan Sadik — Fullstack Developer"
+        />
         <meta
           property="og:description"
           content="Reach out to MD Farhan Sadik for web development projects, collaborations, or inquiries about Fullstack development."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://codexfoli0.netlify.app/contact" />
-        <meta property="og:image" content="https://codexfoli0.netlify.app/og-image.png" />
+        <meta
+          property="og:url"
+          content="https://farhansadik.vercel.app/contact"
+        />
+        <meta
+          property="og:image"
+          content="https://farhansadik.vercel.app/og-image.png"
+        />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Contact MD Farhan Sadik — Fullstack Developer" />
+        <meta
+          name="twitter:title"
+          content="Contact MD Farhan Sadik — Fullstack Developer"
+        />
         <meta
           name="twitter:description"
           content="Reach out to MD Farhan Sadik for web development projects, collaborations, or inquiries about Fullstack development."
         />
-        <meta name="twitter:image" content="https://codexfoli0.netlify.app/og-image.png" />
+        <meta
+          name="twitter:image"
+          content="https://farhansadik.vercel.app/og-image.png"
+        />
 
         {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
@@ -45,13 +60,13 @@ const Contact = () => {
             "@context": "https://schema.org",
             "@type": "Person",
             name: "MD Farhan Sadik",
-            url: "https://codexfoli0.netlify.app",
+            url: "https://farhansadik.vercel.app",
             email: "mailto:your-email@example.com",
             jobTitle: "Fullstack Developer",
             sameAs: [
               "https://github.com/farhandotio",
-              "https://www.linkedin.com/in/mdsadikdev"
-            ]
+              "https://www.linkedin.com/in/mdsadikdev",
+            ],
           })}
         </script>
       </Helmet>

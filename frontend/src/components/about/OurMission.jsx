@@ -6,8 +6,8 @@ const OurMission = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Farhan Sadik",
-    url: "https://codexfoli0.netlify.app",
-    logo: "https://codexfoli0.netlify.app/logo.png",
+    url: "https://farhansadik.vercel.app",
+    logo: "https://farhansadik.vercel.app/logo.png",
     description:
       "Farhan Sadik delivers cutting-edge digital solutions, combining strategic thinking, creative design, and technical expertise to create products that users love and businesses thrive on.",
     sameAs: [
@@ -48,7 +48,8 @@ const OurMission = () => {
               At Farhan Sadik, I believe in the power of technology to transform
               businesses and create meaningful connections. Our mission is to
               deliver cutting-edge digital solutions that not only meet our
-              clients' immediate needs but also position them for future success.
+              clients' immediate needs but also position them for future
+              success.
             </p>
             <p className="text-xl leading-relaxed text-mutedText">
               I combine strategic thinking, creative design, and technical

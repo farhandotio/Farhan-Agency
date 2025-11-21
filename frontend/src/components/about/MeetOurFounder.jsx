@@ -13,7 +13,7 @@ const MeetOurFounder = () => {
     worksFor: {
       "@type": "Organization",
       name: "Farhan Sadik Digital Agency",
-      url: "https://codexfoli0.netlify.app",
+      url: "https://farhansadik.vercel.app",
     },
     sameAs: [
       "https://www.linkedin.com/in/mdsadikdev/",

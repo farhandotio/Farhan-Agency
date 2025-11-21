@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loading from "../common/Loading";
+import Skeleton from "../common/Skeleton";
 
 const ServiceSection = () => {
   const [services, setServices] = useState([]);
@@ -27,8 +28,14 @@ const ServiceSection = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[400px] flex justify-center items-center">
-        <Loading text={"Loading services..."} />
+      <div className="min-h-[300px] flex flex-col gap-6 px-5 sm:px-7 lg:px-10">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="rounded-lg">
+            <Skeleton width="100%" height="180px" rounded />
+            <Skeleton width="80%" height="20px" className="mt-4" />
+            <Skeleton width="60%" height="20px" className="mt-2" />
+          </div>
+        ))}
       </div>
     );
   }

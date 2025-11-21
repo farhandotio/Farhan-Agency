@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
-import Loading from "../components/common/Loading";
+import Skeleton from "../components/common/Skeleton";
 
 // Component for the Service Details Page
 const ServiceDetailsPage = () => {
@@ -33,8 +33,14 @@ const ServiceDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loading text={"Service is loading..."} />
+      <div className="min-h-[300px] flex flex-col gap-6 px-5 sm:px-7 lg:px-10">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="rounded-lg">
+            <Skeleton width="100%" height="180px" rounded />
+            <Skeleton width="80%" height="20px" className="mt-4" />
+            <Skeleton width="60%" height="20px" className="mt-2" />
+          </div>
+        ))}
       </div>
     );
   }
@@ -54,11 +60,11 @@ const ServiceDetailsPage = () => {
   const pageUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}${location.pathname}`
-      : `https://codexfoli0.netlify.app/services/${service.slug || slug}`;
+      : `https://farhansadik.vercel.app/services/${service.slug || slug}`;
   const pageImage =
     service.heroImageUrl ||
     service.image ||
-    "https://codexfoli0.netlify.app/og-image.png";
+    "https://farhansadik.vercel.app/og-image.png";
 
   // JSON-LD structured data for this specific service
   const jsonLd = {
@@ -70,7 +76,7 @@ const ServiceDetailsPage = () => {
     provider: {
       "@type": "Person",
       name: "MD Farhan Sadik",
-      url: "https://codexfoli0.netlify.app",
+      url: "https://farhansadik.vercel.app",
       sameAs: [
         "https://github.com/farhandotio",
         "https://www.linkedin.com/in/mdsadikdev",

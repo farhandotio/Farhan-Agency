@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import ServiceCard from "../components/services/ServiceCard";
 import Loading from "../components/common/Loading";
+import Skeleton from "../components/common/Skeleton";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -34,7 +35,7 @@ const Services = () => {
     provider: {
       "@type": "Person",
       name: "MD Farhan Sadik",
-      url: "https://codexfoli0.netlify.app",
+      url: "https://farhansadik.vercel.app",
       sameAs: [
         "https://github.com/farhandotio",
         "https://www.linkedin.com/in/mdsadikdev",
@@ -53,8 +54,8 @@ const Services = () => {
           name: s.title || s.name || `Service ${i + 1}`,
           description: s.description || s.heroDescription || "",
           url: s.slug
-            ? `https://codexfoli0.netlify.app/services/${s.slug}`
-            : s.url || "https://codexfoli0.netlify.app/services",
+            ? `https://farhansadik.vercel.app/services/${s.slug}`
+            : s.url || "https://farhansadik.vercel.app/services",
         },
       })),
     },
@@ -76,7 +77,7 @@ const Services = () => {
         <meta name="author" content="MD Farhan Sadik" />
 
         {/* Canonical */}
-        <link rel="canonical" href="https://codexfoli0.netlify.app/services" />
+        <link rel="canonical" href="https://farhansadik.vercel.app/services" />
 
         {/* Open Graph */}
         <meta
@@ -90,11 +91,11 @@ const Services = () => {
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content="https://codexfoli0.netlify.app/services"
+          content="https://farhansadik.vercel.app/services"
         />
         <meta
           property="og:image"
-          content="https://codexfoli0.netlify.app/og-image.png"
+          content="https://farhansadik.vercel.app/og-image.png"
         />
 
         {/* Twitter Card */}
@@ -109,7 +110,7 @@ const Services = () => {
         />
         <meta
           name="twitter:image"
-          content="https://codexfoli0.netlify.app/og-image.png"
+          content="https://farhansadik.vercel.app/og-image.png"
         />
 
         {/* JSON-LD structured data */}
@@ -130,8 +131,14 @@ const Services = () => {
       </header>
 
       {loading ? (
-        <div className="min-h-[300px] flex items-center justify-center">
-          <Loading text={`Loading services...`} />
+        <div className="min-h-[300px] flex flex-col gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="rounded-lg">
+              <Skeleton width="100%" height="180px" rounded />
+              <Skeleton width="80%" height="20px" className="mt-4" />
+              <Skeleton width="60%" height="20px" className="mt-2" />
+            </div>
+          ))}
         </div>
       ) : (
         <>

@@ -1,98 +1,100 @@
-// Projects.jsx
-import React, { useEffect, useState, useRef } from "react";
+// src/pages/Projects.jsx
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Helmet } from "react-helmet";
 import ProjectCard from "../components/projects/ProjectCard";
 import axios from "axios";
-import Loading from "../components/common/Loading";
 import { useParams, useLocation } from "react-router-dom";
+import { getLenis } from "../components/common/SmoothScroll";
+import Skeleton from "../components/common/Skeleton";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true); // <-- added loading state
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [highlightId, setHighlightId] = useState(null);
 
-  const { id: routeId } = useParams(); // will pick up :id when route is /products/:id or /projects/:id if used
+  const { id: routeId } = useParams();
   const location = useLocation();
 
-  // refs map: key -> DOM node
   const refsMap = useRef({});
 
+  const setRef = useCallback(
+    (key) => (el) => {
+      if (el) refsMap.current[key] = el;
+    },
+    []
+  );
+
+  // Fetch projects
   useEffect(() => {
+    let cancelled = false;
     async function fetchProject() {
       try {
         setLoading(true);
         const res = await axios.get(
           "https://farhan-agency-wryw.onrender.com/api/projects"
         );
-        setProjects(res.data.projects || []);
+        if (!cancelled) setProjects(res.data.projects || []);
       } catch (err) {
-        setError("Failed to load projects. Please try again.");
-        console.error("Error fetching projects:", err);
+        if (!cancelled) setError("Failed to load projects. Please try again.");
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
-
     fetchProject();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // When projects load or routeId changes, try to scroll to matching project
+  const makeKeyForProject = (p) =>
+    p._id || p.id || p.slug || encodeURIComponent(p.title || "");
+
+  const scrollToProject = useCallback((key) => {
+    const node = refsMap.current[key];
+    if (!node) return;
+
+    const lenis = getLenis();
+
+    const doScroll = () => {
+      if (lenis?.scrollTo) {
+        lenis.scrollTo(node, { offset: 0, duration: 2.0 });
+      } else {
+        node.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      setHighlightId(key);
+      setTimeout(() => setHighlightId(null), 2000);
+    };
+
+    const attemptScroll = (retry = 0) => {
+      if (retry > 20) return;
+      if (!node.offsetParent) {
+        requestAnimationFrame(() => attemptScroll(retry + 1));
+      } else {
+        doScroll();
+      }
+    };
+    attemptScroll();
+  }, []);
+
   useEffect(() => {
-    if (loading) return; // wait until projects finished loading
-    if (!routeId) return; // nothing to scroll to
+    if (loading || !routeId || projects.length === 0) return;
 
-    // find matching project key using possible fields
-    const match = projects.find((p) => {
-      const candidates = [
-        p._id,
-        p.id,
-        p.slug,
-        (p.title && encodeURIComponent(p.title)) || null,
-      ].filter(Boolean);
-      return candidates.includes(routeId);
-    });
-
-    // if found, find the ref key we generated (we'll use the same matching logic to create the key)
-    if (match) {
-      const key = makeKeyForProject(match);
-      const node = refsMap.current[key];
-      if (node && typeof node.scrollIntoView === "function") {
-        // small timeout to ensure layout stable
-        setTimeout(() => {
-          node.scrollIntoView({ behavior: "smooth", block: "center" });
-
-          // add highlight for visual feedback
-          setHighlightId(key);
-          // remove highlight after 2s
-          setTimeout(() => setHighlightId(null), 2000);
-        }, 100);
-      }
-    } else {
-      // No exact match found — try to decode routeId and look for title match
+    let match = projects.find((p) =>
+      [p._id, p.id, p.slug, encodeURIComponent(p.title)].includes(routeId)
+    );
+    if (!match) {
       const decoded = decodeURIComponent(routeId);
-      const byTitle = projects.find((p) => p.title === decoded);
-      if (byTitle) {
-        const key = makeKeyForProject(byTitle);
-        const node = refsMap.current[key];
-        if (node) {
-          setTimeout(() => {
-            node.scrollIntoView({ behavior: "smooth", block: "center" });
-            setHighlightId(key);
-            setTimeout(() => setHighlightId(null), 2000);
-          }, 100);
-        }
-      }
+      match = projects.find((p) => p.title === decoded);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routeId, loading, location.pathname, projects]);
+    if (!match) return;
 
-  // helper to generate consistent key for refs
-  const makeKeyForProject = (p) => {
-    return p._id || p.id || p.slug || encodeURIComponent(p.title || "");
-  };
+    const key = makeKeyForProject(match);
+    scrollToProject(key);
+  }, [routeId, loading, projects, scrollToProject]);
 
-  // JSON-LD for SEO (ItemList)
+  // JSON-LD
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -108,7 +110,7 @@ const Projects = () => {
         description: p.description || p.shortDescription || "",
         url:
           p.liveUrl ||
-          (p.slug ? `https://codexfoli0.netlify.app/projects/${p.slug}` : ""),
+          (p.slug ? `https://farhansadik.vercel.app/projects/${p.slug}` : ""),
         image: p.image || p.previewImage || "",
       },
     })),
@@ -116,49 +118,13 @@ const Projects = () => {
 
   return (
     <section id="projects" className="bg-bg text-text p-5 md:p-7 lg:p-10 mt-20">
-      {/* SEO / Social Metadata */}
       <Helmet>
         <title>Projects — MD Farhan Sadik</title>
         <meta
           name="description"
           content="Projects by MD Farhan Sadik — a selection of web applications and UI projects built with React, Redux, Node.js and modern web technologies."
         />
-        <meta
-          name="keywords"
-          content="MD Farhan Sadik, projects, React projects, portfolio, web apps, frontend, backend, fullstack"
-        />
-        <meta name="author" content="MD Farhan Sadik" />
-
-        {/* canonical */}
-        <link rel="canonical" href="https://codexfoli0.netlify.app/projects" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="Projects — MD Farhan Sadik" />
-        <meta
-          property="og:description"
-          content="A showcase of web applications and UI projects built by MD Farhan Sadik using modern frontend and backend technologies."
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://codexfoli0.netlify.app/projects"
-        />
-        <meta
-          property="og:image"
-          content="https://codexfoli0.netlify.app/og-image.png"
-        />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Projects — MD Farhan Sadik" />
-        <meta
-          name="twitter:description"
-          content="A showcase of web applications and UI projects built by MD Farhan Sadik using modern frontend and backend technologies."
-        />
-        <meta
-          name="twitter:image"
-          content="https://codexfoli0.netlify.app/og-image.png"
-        />
+        <link rel="canonical" href="https://farhansadik.vercel.app/projects" />
       </Helmet>
 
       <header className="mb-16 md:mb-24">
@@ -173,39 +139,33 @@ const Projects = () => {
         </p>
       </header>
 
-      {/* 🔄 Loading State */}
       {loading && (
-        <div className="min-h-[300px] flex items-center justify-center">
-          <Loading text="Projects are loading..." />
+        <div className="min-h-[300px] flex flex-col gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="rounded-lg">
+              <Skeleton width="100%" height="180px" rounded />
+              <Skeleton width="80%" height="20px" className="mt-4" />
+              <Skeleton width="60%" height="20px" className="mt-2" />
+            </div>
+          ))}
         </div>
       )}
 
-      {/* ❌ Error Message */}
-      {!loading && error && (
-        <p className="text-red-500 text-center text-lg">{error}</p>
-      )}
-
-      {/* ✅ Projects List */}
       {!loading && !error && (
         <>
           {projects.length > 0 ? (
             projects.map((project) => {
               const key = makeKeyForProject(project);
-              // ensure a stable ref object exists
-              if (!refsMap.current[key]) refsMap.current[key] = null;
-
               return (
                 <div
                   key={key}
-                  ref={(el) => (refsMap.current[key] = el)}
-                  // add a temporary highlight ring when this is the target
+                  ref={setRef(key)}
                   className={`transition-shadow duration-300 ${
                     highlightId === key
                       ? "ring-4 ring-primary/40 rounded-xl"
                       : ""
                   } mb-6`}
                 >
-                  {/* Wrap ProjectCard so no need to modify child component */}
                   <ProjectCard project={project} />
                 </div>
               );
@@ -218,7 +178,6 @@ const Projects = () => {
         </>
       )}
 
-      {/* JSON-LD structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
