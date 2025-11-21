@@ -1,7 +1,8 @@
-// controllers/order.controllers.js
 import orderModel from "../models/order.model.js";
-import uploadFile from "../services/storage.service.js"; // আপনার storage service
+import uploadFile from "../services/storage.service.js"; // storage service
 
+// ==========================
+// Create order
 // ==========================
 export const createOrder = async (req, res) => {
   try {
@@ -16,20 +17,18 @@ export const createOrder = async (req, res) => {
       attachments: attachmentsFromBody,
     } = req.body;
 
-    if (
-      !fullname ||
-      !emailAddress ||
-      !phoneNumber ||
-      !projectType ||
-      !budgetRange
-    ) {
+    if (!fullname || !emailAddress || !phoneNumber || !projectType || !budgetRange) {
       return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     const attachments = [];
 
+    // Handle uploaded files
     let uploadedFileList = [];
-
     if (req.files) {
       if (!Array.isArray(req.files) && typeof req.files === "object") {
         uploadedFileList = Object.values(req.files).flat();
@@ -42,21 +41,12 @@ export const createOrder = async (req, res) => {
       const uploadResults = await Promise.all(
         uploadedFileList.map(async (file) => {
           try {
-            try {
-              const resp = await uploadFile(file, file.originalname);
-              return {
-                success: true,
-                url: resp?.url || resp?.fileUrl || null,
-                filename: resp?.name || file.originalname,
-              };
-            } catch (innerErr) {
-              const resp2 = await uploadFile(file.buffer, file.originalname);
-              return {
-                success: true,
-                url: resp2?.url || resp2?.fileUrl || null,
-                filename: resp2?.name || file.originalname,
-              };
-            }
+            const resp = await uploadFile(file.buffer || file, file.originalname);
+            return {
+              success: true,
+              url: resp?.url || resp?.fileUrl || null,
+              filename: resp?.name || file.originalname,
+            };
           } catch (err) {
             console.error("Single file upload failed:", err);
             return { success: false, error: err.message || "Upload failed" };
@@ -64,23 +54,19 @@ export const createOrder = async (req, res) => {
         })
       );
 
-      // Push successful uploads into attachments
       uploadResults.forEach((r) => {
         if (r.success && r.url) {
           attachments.push({ url: r.url, filename: r.filename });
-        } else {
-          // optionally log r.error
-          console.warn("Skipping failed upload:", r.error || r);
         }
       });
     }
 
+    // Handle attachments from body
     if (attachmentsFromBody) {
       try {
-        const parsed =
-          typeof attachmentsFromBody === "string"
-            ? JSON.parse(attachmentsFromBody)
-            : attachmentsFromBody;
+        const parsed = typeof attachmentsFromBody === "string"
+          ? JSON.parse(attachmentsFromBody)
+          : attachmentsFromBody;
         if (Array.isArray(parsed)) {
           parsed.forEach((a) => {
             if (a && (a.url || a.filename)) {
@@ -98,6 +84,7 @@ export const createOrder = async (req, res) => {
 
     // Build order
     const order = new orderModel({
+      user: req.user._id, // attach logged-in user
       fullname,
       emailAddress,
       phoneNumber,
@@ -122,11 +109,10 @@ export const createOrder = async (req, res) => {
 // ==========================
 export const getUserOrders = async (req, res) => {
   try {
-    const user = req.user;
-    if (!user) return res.status(401).json({ message: "Unauthorized" });
+    if (!req.user || !req.user._id) return res.status(401).json({ message: "Unauthorized" });
 
     const orders = await orderModel
-      .find({ user: user._id })
+      .find({ user: req.user._id })
       .sort({ createdAt: -1 });
 
     return res.status(200).json({ orders });
@@ -141,17 +127,13 @@ export const getUserOrders = async (req, res) => {
 // ==========================
 export const deleteUserOrder = async (req, res) => {
   try {
-    const user = req.user;
-    if (!user) return res.status(401).json({ message: "Unauthorized" });
+    if (!req.user || !req.user._id) return res.status(401).json({ message: "Unauthorized" });
 
     const { id } = req.params;
     const order = await orderModel.findById(id);
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    if (
-      order.user.toString() !== user._id.toString() &&
-      user.role !== "admin"
-    ) {
+    if (order.user.toString() !== req.user._id.toString() && req.user.role !== "admin") {
       return res.status(403).json({ message: "Forbidden" });
     }
 
@@ -170,7 +152,7 @@ export const getAllOrders = async (req, res) => {
   try {
     const orders = await orderModel
       .find()
-      .populate("user", "fullname emailAddress picture role")
+      .populate("user", "fullname email picture role")
       .sort({ createdAt: -1 });
 
     return res.status(200).json({ orders });
@@ -188,15 +170,8 @@ export const updateOrderStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    const allowed = [
-      "requested",
-      "accepted",
-      "in-progress",
-      "completed",
-      "cancelled",
-    ];
-    if (!allowed.includes(status))
-      return res.status(400).json({ message: "Invalid status" });
+    const allowed = ["requested", "accepted", "in-progress", "completed", "cancelled"];
+    if (!allowed.includes(status)) return res.status(400).json({ message: "Invalid status" });
 
     const order = await orderModel.findById(id);
     if (!order) return res.status(404).json({ message: "Order not found" });
