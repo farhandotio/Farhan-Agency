@@ -128,7 +128,7 @@ export async function createProject(req, res) {
   }
 }
 
-// PUT /projects/:id  (admin only)
+// PATCH /projects/:id  (admin only)
 export async function updateProject(req, res) {
   try {
     const { id } = req.params;
