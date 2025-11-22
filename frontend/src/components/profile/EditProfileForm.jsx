@@ -1,105 +1,150 @@
-import React, { useEffect, useState } from "react";
+// File: EditProfileForm.jsx
+import React, { useEffect, useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfileUser } from "../../app/features/auth/authSlice";
+import { FiUser, FiMail, FiBriefcase } from "react-icons/fi";
 
 const EditProfileForm = ({ user, onCancel, onSaved }) => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((s) => s.auth);
+  const { loading } = useSelector((s) => s.auth);
+
+  const [preview, setPreview] = useState(user?.picture || null);
+  const fileInputRef = useRef(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      firstName: user?.fullname?.firstName || "",
+      lastName: user?.fullname?.lastName || "",
+      email: user?.email || "",
+      company: user?.company || "",
+      picture: null,
+    },
+  });
+
   useEffect(() => {
-    setFirstName(user?.fullname?.firstName || "");
-    setLastName(user?.fullname?.lastName || "");
-    setCompany(user?.company || "");
+    reset({
+      firstName: user?.fullname?.firstName || "",
+      lastName: user?.fullname?.lastName || "",
+      email: user?.email || "",
+      company: user?.company || "",
+      picture: null,
+    });
     setPreview(user?.picture || null);
-    setFile(null);
-  }, [user]);
+  }, [user, reset]);
 
-  const handleFile = (e) => {
-    const f = e.target.files?.[0] || null;
-    if (!f) return;
-    setFile(f);
-    const obj = URL.createObjectURL(f);
-    setPreview(obj);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const fd = new FormData();
-    if (firstName) fd.append("fullname.firstName", firstName);
-    if (lastName) fd.append("fullname.lastName", lastName);
-    fd.append("company", company || "");
-    if (file) fd.append("picture", file);
-
-    const action = await dispatch(updateProfileUser(fd));
-    if (updateProfileUser.fulfilled.match(action)) {
-      onSaved && onSaved();
-    } else {
-      console.error("Update failed", action.payload || action.error);
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setValue("picture", file);
+      setPreview(URL.createObjectURL(file));
     }
   };
 
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    if (data.firstName) formData.append("fullname.firstName", data.firstName);
+    if (data.lastName) formData.append("fullname.lastName", data.lastName);
+    if (data.email) formData.append("email", data.email);
+    formData.append("company", data.company || "");
+    if (data.picture) formData.append("picture", data.picture);
+
+    const action = await dispatch(updateProfileUser(formData));
+    if (updateProfileUser.fulfilled.match(action)) {
+      onSaved?.();
+    }
+  };
+
+  // Input wrapper with icon
+  const InputWithIcon = ({ icon: Icon, label, registerProps, error, type = "text" }) => (
+    <div className="relative w-full">
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <div className="flex items-center border border-border bg-hoverCardBg rounded px-2 py-2">
+        <Icon className="text-gray-400 mr-2" />
+        <input
+          type={type}
+          {...registerProps}
+          className="w-full outline-none bg-hoverCardBg"
+        />
+      </div>
+      {error && <p className="text-danger text-sm mt-1">{error.message}</p>}
+    </div>
+  );
+
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded bg-white">
-      <h2 className="text-lg font-medium mb-3">Edit Profile</h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div>
-          <label className="block text-sm">First name</label>
+    <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
+      {/* Profile Photo */}
+      <div className="flex justify-center mb-4">
+        <div
+          className="w-24 h-24 rounded-full overflow-hidden cursor-pointer border-2 border-primary flex items-center justify-center bg-hoverCardBg"
+          onClick={() => fileInputRef.current.click()}
+        >
+          {preview ? (
+            <img src={preview} alt="preview" className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-pText">Upload</span>
+          )}
           <input
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            className="mt-1 w-full px-2 py-2 border rounded"
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleFileChange}
           />
-        </div>
-
-        <div>
-          <label className="block text-sm">Last name</label>
-          <input
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className="mt-1 w-full px-2 py-2 border rounded"
-          />
-        </div>
-
-        <div className="sm:col-span-2">
-          <label className="block text-sm">Company</label>
-          <input
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            className="mt-1 w-full px-2 py-2 border rounded"
-          />
-        </div>
-
-        <div className="sm:col-span-2">
-          <label className="block text-sm">Profile picture</label>
-          <div className="mt-2 flex items-center gap-3">
-            <img
-              src={preview || "/default-avatar.png"}
-              alt="preview"
-              className="w-16 h-16 rounded-full object-cover"
-            />
-            <input type="file" accept="image/*" onChange={handleFile} />
-          </div>
         </div>
       </div>
 
-      <div className="mt-4 flex gap-2">
+      {/* First & Last Name on same line */}
+      <div className="flex gap-2">
+        <InputWithIcon
+          icon={FiUser}
+          label="First Name"
+          registerProps={register("firstName", { required: "First name is required" })}
+          error={errors.firstName}
+        />
+        <InputWithIcon
+          icon={FiUser}
+          label="Last Name"
+          registerProps={register("lastName", { required: "Last name is required" })}
+          error={errors.lastName}
+        />
+      </div>
+
+      {/* Email */}
+      <InputWithIcon
+        icon={FiMail}
+        label="Email"
+        type="email"
+        registerProps={register("email", { required: "Email is required" })}
+        error={errors.email}
+      />
+
+      {/* Company */}
+      <InputWithIcon
+        icon={FiBriefcase}
+        label="Company"
+        registerProps={register("company")}
+      />
+
+      {/* Save & Cancel */}
+      <div className="flex gap-2 mt-4">
         <button
           type="submit"
           disabled={loading}
-          className="px-3 py-2 rounded bg-green-600 text-white"
+          className="bg-primary text-white px-4 py-2 rounded"
         >
           {loading ? "Saving..." : "Save"}
         </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="px-3 py-2 rounded border"
-        >
+        <button type="button" onClick={onCancel} className="border px-4 py-2 rounded">
           Cancel
         </button>
       </div>
-
-      {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
     </form>
   );
 };

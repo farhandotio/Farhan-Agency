@@ -9,7 +9,6 @@ export const fetchProfile = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await authApi.getProfile();
-      console.log(res)
       return res.data?.user || null;
       
     } catch (err) {

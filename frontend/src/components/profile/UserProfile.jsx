@@ -8,7 +8,7 @@ const UserProfile = ({ user, onEdit, onLogout }) => {
   }`.trim();
 
   return (
-    <div className="p-4 border rounded bg-white">
+    <div className="p-4 border border-border rounded bg-cardBg">
       <div className="flex items-center space-x-4">
         <img
           src={user.picture || "/default-avatar.png"}
@@ -17,9 +17,9 @@ const UserProfile = ({ user, onEdit, onLogout }) => {
         />
         <div>
           <div className="text-lg font-medium">{fullname || user.email}</div>
-          <div className="text-sm text-gray-500">{user.email}</div>
+          <div className="text-sm text-pText">{user.email}</div>
           {user.company && (
-            <div className="text-sm text-gray-500">{user.company}</div>
+            <div className="text-sm text-pText">{user.company}</div>
           )}
         </div>
       </div>
@@ -27,7 +27,7 @@ const UserProfile = ({ user, onEdit, onLogout }) => {
       <div className="mt-4 flex gap-2">
         <button
           onClick={onEdit}
-          className="px-3 py-2 rounded bg-blue-600 text-white"
+          className="px-3 py-2 rounded bg-primary text-text"
         >
           Edit
         </button>

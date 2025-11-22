@@ -41,6 +41,10 @@
 
   --color-danger: #b91c1c;
   --color-success: #16a34a;
+  --color-request: #facc15;
+  --color-accept: #3b82f6;
+  --color-progress: #6366f1;
+  
   --color-warning: #ca8a04;
   --color-warningBg: #ffae0009;
 
