@@ -28,30 +28,33 @@ const Login = () => {
   };
 
   const InputWithIcon = ({ icon: Icon, type = "text", placeholder, registerProps, error, showToggle }) => (
-    <div className="relative w-full mb-4">
-      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-        <Icon size={20} />
-      </span>
-      <input
-        type={type}
-        placeholder={placeholder}
-        {...registerProps}
-        className="w-full border border-border px-10 py-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
-      />
-      {showToggle && (
-        <span
-          onClick={showToggle.toggle}
-          className="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
-        >
-          {showToggle.show ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+    <div className="flex flex-col w-full mb-4">
+      <div className="relative w-full">
+        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 pointer-events-none">
+          <Icon size={20} />
         </span>
-      )}
+        <input
+          type={type}
+          placeholder={placeholder}
+          {...registerProps}
+          className={`w-full border border-border px-10 py-2 rounded focus:outline-none focus:ring-2 focus:ring-primary
+            ${error ? "border-red-500" : ""}`}
+        />
+        {showToggle && (
+          <span
+            onClick={showToggle.toggle}
+            className="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
+          >
+            {showToggle.show ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+          </span>
+        )}
+      </div>
       {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
     </div>
   );
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center py-25 bg-bg px-5 sm:px-7 lg:px-10">
+    <div className="min-h-screen w-full flex items-center justify-center py-20 bg-bg px-5 sm:px-7 lg:px-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-cardBg p-8 rounded-lg shadow-lg w-full max-w-sm flex flex-col"

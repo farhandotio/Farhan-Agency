@@ -9,7 +9,10 @@ const instance = axios.create({
 
 // -------------------- AUTH APIs -------------------- //
 
-export const register = (formData) => instance.post("/register", formData);
+export const register = (formData) =>
+  instance.post("/register", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 
 export const login = (credentials) => instance.post("/login", credentials);
 

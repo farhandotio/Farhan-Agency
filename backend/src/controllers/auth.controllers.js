@@ -241,7 +241,6 @@ export async function getProfile(req, res) {
       },
     });
   } catch (err) {
-    console.error("Get profile error:", err);
     res.status(500).json({ message: "Server error" });
   }
 }

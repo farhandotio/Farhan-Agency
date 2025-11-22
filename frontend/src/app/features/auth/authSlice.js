@@ -10,9 +10,10 @@ export const fetchProfile = createAsyncThunk(
     try {
       const res = await authApi.getProfile();
       return res.data?.user || null;
-      
     } catch (err) {
-      return rejectWithValue("Unauthorized");
+      // Prevent unauthorized from being treated as a real error
+      if (err.response?.status === 401) return null;
+      return rejectWithValue(err.message || "Fetch profile failed");
     }
   }
 );
@@ -85,12 +86,10 @@ export const updateProfileUser = createAsyncThunk(
 // -------------------- INITIAL STATE -------------------- //
 
 const initialState = {
-  user: null,            // always object or null
+  user: null,
   loading: false,
   error: null,
-
-  // admin users list
-  users: [],             // array of user objects (admin)
+  users: [],
   usersLoading: false,
   usersError: null,
 };
@@ -104,12 +103,11 @@ const authSlice = createSlice({
       state.error = null;
     },
     setUser(state, action) {
-      state.user = action.payload || null; // ensure object/null
+      state.user = action.payload || null;
     },
     clearUser(state) {
       state.user = null;
     },
-    // optional: clear users list (admin)
     clearUsers(state) {
       state.users = [];
       state.usersError = null;
@@ -121,16 +119,21 @@ const authSlice = createSlice({
       // fetchProfile
       .addCase(fetchProfile.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(fetchProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload; // object or null
+        state.error = null; // never show unauthorized
       })
       .addCase(fetchProfile.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
-        state.error = action.payload || null;
+        // Only set error if it’s a real error
+        if (action.payload && action.payload !== "Unauthorized") {
+          state.error = action.payload;
+        } else {
+          state.error = null;
+        }
       })
 
       // loginUser
@@ -140,7 +143,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; // object
+        state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -155,7 +158,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; // object
+        state.user = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -166,20 +169,20 @@ const authSlice = createSlice({
       // logoutUser
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
+        state.error = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
-        // keep current state but set error if any
         state.error = action.payload || null;
       })
 
-      // fetchAllUsers (admin)
+      // fetchAllUsers
       .addCase(fetchAllUsers.pending, (state) => {
         state.usersLoading = true;
         state.usersError = null;
       })
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.usersLoading = false;
-        state.users = action.payload; // array
+        state.users = action.payload;
       })
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.usersLoading = false;
@@ -194,7 +197,7 @@ const authSlice = createSlice({
       })
       .addCase(updateProfileUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload; // updated user object
+        state.user = action.payload;
       })
       .addCase(updateProfileUser.rejected, (state, action) => {
         state.loading = false;
@@ -209,4 +212,5 @@ export const {
   setUser,
   clearUsers,
 } = authSlice.actions;
+
 export default authSlice.reducer;
