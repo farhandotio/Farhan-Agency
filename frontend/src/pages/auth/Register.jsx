@@ -39,7 +39,7 @@ const Register = () => {
   const handlePictureChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setValue("picture", file); // Important!
+      setValue("picture", file);
       setPreview(URL.createObjectURL(file));
     }
   };
@@ -54,7 +54,9 @@ const Register = () => {
     if (data.picture) formData.append("picture", data.picture);
 
     const resultAction = await dispatch(registerUser(formData));
-    navigate("/");
+    if (registerUser.fulfilled.match(resultAction)) {
+      navigate("/")
+    }
   };
 
   // Input component with icon & error below input

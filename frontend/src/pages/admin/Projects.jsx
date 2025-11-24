@@ -12,7 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 const ProjectCard = ({ project, onEdit, onDelete }) => (
   <div className="w-full p-4 rounded-lg bg-cardBg border border-border flex items-start justify-between gap-4">
     <div className="flex items-start gap-4 flex-1 min-w-0">
-      <div className="w-16 h-16 rounded-md bg-hoverCardBg flex items-center justify-center overflow-hidden shrink-0">
+      <div className="w-10 h-10 md:w-16 md:h-16 rounded-md bg-hoverCardBg flex items-center justify-center overflow-hidden shrink-0">
         {project.image ? (
           <img
             src={project.image}
@@ -20,14 +20,14 @@ const ProjectCard = ({ project, onEdit, onDelete }) => (
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="text-sm font-semibold text-mutedText px-2 text-center">
+          <div className="text-xs md:text-sm font-semibold text-mutedText px-2 text-center">
             {project.title?.slice(0, 2)?.toUpperCase() || "PJ"}
           </div>
         )}
       </div>
       <div className="min-w-0">
-        <div className="font-medium truncate">{project.title}</div>
-        <div className="text-sm text-mutedText truncate mt-1">
+        <div className="font-medium md:truncate text-sm md:text-base">{project.title}</div>
+        <div className="text-xs md:text-sm text-mutedText mt-1">
           {project.description?.slice(0, 120)}
         </div>
       </div>
@@ -160,9 +160,9 @@ const Projects = () => {
 
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Projects</h1>
-        <div className="inline-flex items-center gap-3 text-sm text-mutedText">
+        <div className="inline-flex items-center gap-3 text-xs md:text-sm text-mutedText">
           <span>Total:</span>
-          <span className="px-3 py-1 rounded-full bg-hoverCardBg text-sm font-medium">
+          <span className="px-3 py-1 rounded-full bg-hoverCardBg text-xs md:text-sm font-medium">
             {total || projects.length}
           </span>
         </div>

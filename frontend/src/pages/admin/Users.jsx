@@ -34,9 +34,8 @@ function UserCard({ user }) {
     <button
       type="button"
       className="w-full text-left p-3 rounded-lg hover:shadow-sm transition bg-cardBg border border-border flex items-center gap-4"
-      // onClick={() => openUser(user)} // uncomment if you add a modal/open action later
     >
-      <div className="w-12 h-12 rounded-full bg-hoverCardBg flex items-center justify-center overflow-hidden shrink-0">
+      <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-hoverCardBg flex items-center justify-center overflow-hidden shrink-0">
         {avatarSrc ? (
           <img
             src={avatarSrc}
@@ -51,21 +50,21 @@ function UserCard({ user }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-3">
           <div className="truncate">
-            <div className="font-medium truncate">
+            <div className="font-medium truncate text-sm md:text-base">
               {user.fullname?.firstName || user.name || "Unnamed User"}{" "}
               {user.fullname?.lastName ? user.fullname.lastName : ""}
             </div>
-            <div className="text-sm text-mutedText truncate">{user.email}</div>
+            <div className="text-xs md:text-sm text-mutedText truncate">{user.email}</div>
             {user.company && (
-              <div className="text-sm text-mutedText truncate">{user.company}</div>
+              <div className="text-xs md:text-sm text-mutedText truncate">{user.company}</div>
             )}
           </div>
 
           <div className="text-right">
-            <div className="inline-block py-1 px-2 rounded-full bg-hoverCardBg text-sm font-medium">
+            <div className="inline-block py-1 px-2 rounded-full bg-hoverCardBg text-xs md:text-sm font-medium">
               {user.role || "user"}
             </div>
-            <div className="text-xs text-mutedText mt-1">
+            <div className="text-xs md:text-sm text-mutedText mt-1">
               {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : ""}
             </div>
           </div>
@@ -105,7 +104,7 @@ const Users = () => {
         ))}
       </div>
     );
-  if (usersError) return <div className="text-red-500">{usersError}</div>;
+  if (usersError) return <div className="text-danger">{usersError}</div>;
 
   return (
     <div>

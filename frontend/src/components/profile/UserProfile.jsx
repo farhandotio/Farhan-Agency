@@ -20,11 +20,11 @@ const UserProfile = ({ user, onEdit, onLogout }) => {
         <img
           src={user.picture || "/default-avatar.png"}
           alt="avatar"
-          className="w-20 h-20 rounded-full object-cover"
+          className="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover"
         />
         <div>
-          <div className="text-lg font-medium">{fullname || user.email}</div>
-          <div className="text-sm text-pText">{user.email}</div>
+          <div className="md:text-lg font-medium">{fullname || user.email}</div>
+          <div className="text-xs md:text-sm text-pText">{user.email}</div>
           {user.company && (
             <div className="text-sm text-pText">{user.company}</div>
           )}
@@ -34,14 +34,14 @@ const UserProfile = ({ user, onEdit, onLogout }) => {
       <div className="mt-4 flex gap-2">
         <button
           onClick={onEdit}
-          className="px-3 py-2 rounded bg-primary text-text"
+          className="px-2.5 py-1 rounded bg-primary text-text cursor-pointer hover:bg-primary/95"
         >
           Edit
         </button>
 
         <button
           onClick={handleLogout}
-          className="px-3 py-2 rounded bg-danger text-text"
+          className="px-2.5 py-1 rounded bg-danger text-text cursor-pointer hover:bg-danger/95"
         >
           Logout
         </button>

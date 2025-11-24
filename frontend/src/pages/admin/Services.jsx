@@ -1,15 +1,22 @@
 // File: src/pages/admin/Services.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchServices, deleteService } from "../../app/features/services/servicesSlice";
+import {
+  fetchServices,
+  deleteService,
+} from "../../app/features/services/servicesSlice";
 import { FiTrash2 } from "react-icons/fi";
 
 const ServiceCard = ({ service, onDelete }) => (
   <div className="w-full p-4 rounded-lg bg-cardBg border border-border flex items-start justify-between gap-4">
     <div className="flex items-start gap-4 flex-1 min-w-0">
-      <div className="w-16 h-16 rounded-md bg-hoverCardBg flex items-center justify-center overflow-hidden shrink-0">
+      <div className="w-10 h-10 md:w-16 md:h-16 rounded-md bg-hoverCardBg flex items-center justify-center overflow-hidden shrink-0">
         {service.heroImageUrl ? (
-          <img src={service.heroImageUrl} alt={service.title} className="w-full h-full object-cover" />
+          <img
+            src={service.heroImageUrl}
+            alt={service.title}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div className="text-sm font-semibold text-mutedText px-2 text-center">
             {service.title?.slice(0, 2)?.toUpperCase() || "SV"}
@@ -17,11 +24,21 @@ const ServiceCard = ({ service, onDelete }) => (
         )}
       </div>
       <div className="min-w-0">
-        <div className="font-medium truncate">{service.title}</div>
-        <div className="text-sm text-mutedText truncate mt-1">{service.heroDescription?.slice(0, 120) || ""}</div>
+        <div className="font-medium md:truncate">{service.title}</div>
+        <div className="text-xs md:text-sm whitespace-normal text-mutedText mt-1">
+          {service.heroDescription?.slice(0, 120) || ""}
+        </div>
         <div className="flex items-center gap-3 mt-3 text-xs text-mutedText">
-          {service.featured && <span className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800">Featured</span>}
-          {typeof service.order !== "undefined" && <span className="px-2 py-0.5 rounded-full bg-hoverCardBg">Order: {service.order}</span>}
+          {service.featured && (
+            <span className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800">
+              Featured
+            </span>
+          )}
+          {typeof service.order !== "undefined" && (
+            <span className="px-2 py-0.5 rounded-full bg-hoverCardBg">
+              Order: {service.order}
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -39,14 +56,21 @@ const ServiceCard = ({ service, onDelete }) => (
 
 const Services = () => {
   const dispatch = useDispatch();
-  const { services = [], total = 0, loading, error } = useSelector((s) => s.services || {});
+  const {
+    services = [],
+    total = 0,
+    loading,
+    error,
+  } = useSelector((s) => s.services || {});
 
   useEffect(() => {
     dispatch(fetchServices({ page: 1, limit: 50 }));
   }, [dispatch]);
 
   const handleDelete = async (service) => {
-    const ok = window.confirm(`Delete "${service.title}"? This cannot be undone.`);
+    const ok = window.confirm(
+      `Delete "${service.title}"? This cannot be undone.`
+    );
     if (!ok) return;
 
     try {
@@ -77,7 +101,9 @@ const Services = () => {
         <h1 className="text-2xl font-semibold">Services</h1>
         <div className="inline-flex items-center gap-3 text-sm text-mutedText">
           <span className="text-mutedText">Total:</span>
-          <span className="px-3 py-1 rounded-full bg-hoverCardBg text-sm font-medium">{total || services.length || 0}</span>
+          <span className="px-3 py-1 rounded-full bg-hoverCardBg text-sm font-medium">
+            {total || services.length || 0}
+          </span>
         </div>
       </div>
 

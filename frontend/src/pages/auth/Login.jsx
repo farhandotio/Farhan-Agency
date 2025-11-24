@@ -21,7 +21,9 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const resultAction = await dispatch(loginUser(data));
-    navigate("/")
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate("/")
+    }
   };
 
   const InputWithIcon = ({ icon: Icon, type = "text", placeholder, registerProps, error, showToggle }) => (
