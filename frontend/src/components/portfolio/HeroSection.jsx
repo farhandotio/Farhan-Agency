@@ -3,26 +3,26 @@ import React from "react";
 const HeroSection = () => {
   return (
     <section
-      className="bg-bg overflow-hidden min-h-[650px] pt-20 flex items-center"
+      className="bg-bg overflow-hidden min-h-[650px] pt-15 flex items-center"
       aria-label="MD Farhan Sadik Portfolio"
       itemScope
       itemType="https://schema.org/WebPage"
       role="region"
     >
       <div className="p-5 sm:p-7 lg:p-10 flex flex-col items-center">
-        <div className="mb-12 lg:mb-0 lg:pr-16 text-center lg:text-left">
+        <div className="mb-12 lg:mb-0 text-center lg:text-left">
           <h1
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-text"
+            className="text-6xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-text"
             itemProp="headline"
           >
-            <span>MD Farhan Sadik</span> <br />
-            <span className="block pt-2 text-primary"> — Fullstack, </span>
-            <span className="max-lg:block text-secondary"> Frontend & </span>
+            <span>MD Farhan <br className="md:hidden" /> Sadik</span> <br />
+            <span className="block pt-2 text-primary"> — <br className="md:hidden" /> Mern Stack, </span>
+            <span className="max-lg:block text-secondary"> Frontend <br className="md:hidden" /> & </span>
             <span className="max-lg:block"> Backend Developer </span>
           </h1>
 
           <p
-            className="mt-6 text-2xl leading-relaxed max-w-4xl text-mutedText"
+            className="mt-6 text-xl md:text-2xl leading-relaxed max-w-4xl text-mutedText"
             itemProp="description"
           >
             I build modern, scalable web applications. From responsive
@@ -32,7 +32,7 @@ const HeroSection = () => {
 
           <a
             href="#projects"
-            className="mt-8 inline-block bg-primary text-white font-semibold px-8 py-4 rounded-xl hover:bg-primary/90 transition"
+            className="md:mt-8 mt-5 inline-block bg-primary text-white font-semibold px-8 py-4 rounded-xl hover:bg-primary/90 transition"
           >
             View My Work
           </a>

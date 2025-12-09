@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import "tailwindcss";
 
@@ -25,7 +25,8 @@
   --color-hoverPrimary: #0ac25a;
   --color-hoverCardBg: #1f1f1f;
 
-  --font-family: "Montserrat";
+  --font-montserrat: "Montserrat";
+  --font-raleway: "Raleway", sans-serif;
 }
 
 .light {
@@ -56,7 +57,10 @@
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-family);
+  font-family: var(--font-montserrat);
+}
+h1,h2,h3,h4,h5,h6{
+  font-family: var(--font-raleway);
 }
 .input,
 .textarea,

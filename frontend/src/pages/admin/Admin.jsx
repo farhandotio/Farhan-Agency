@@ -71,7 +71,7 @@ const Admin = () => {
         )}
 
         <aside
-          className={`z-40 w-64 bg-bg border-r border-border md:flex flex-col px-5 sm:px-7 lg:px-10 py-15 md:py-0 absolute transform transition-transform duration-200
+          className={`z-40 w-64 bg-bg border-r border-border md:flex flex-col px-5 sm:px-7 lg:px-10 py-20 md:py-0 absolute transform transition-transform duration-200
             ${
               isOpen
                 ? "translate-x-0 fixed top-0 left-0 h-full shadow-lg"
@@ -80,7 +80,7 @@ const Admin = () => {
           role="navigation"
           aria-label="Admin sidebar"
         >
-          <div className="py-4 border-b border-border flex items-center justify-between">
+          {/* <div className="py-4 border-b border-border flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-9 h-9 rounded bg-primary flex items-center justify-center text-text font-bold">
                 A
@@ -90,7 +90,7 @@ const Admin = () => {
                 <div className="text-xs text-mutedText">Dashboard</div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <nav className="flex flex-col gap-2 overflow-y-auto">
             {sidebarLinks.map((link) => {

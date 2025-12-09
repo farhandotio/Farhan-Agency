@@ -19,7 +19,7 @@ const Logo = ({ size = "md", className = "" }) => {
       <h1
         className={`${sizeClasses[size]} whitespace-nowrap uppercase font-bold tracking-widest`}
       >
-        Farhan <span className="text-secondary">Dev</span>
+        Farhan <span className="text-primary">Dev</span>
         <span className="text-primary">.</span>
       </h1>
     </Link>
