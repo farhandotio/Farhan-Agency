@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   FiDownload,
@@ -13,23 +13,25 @@ import {
   FiCode,
   FiClipboard,
   FiDollarSign,
-} from "react-icons/fi";
+} from 'react-icons/fi';
+import { generateStepPDF } from '../../utils/generateStepPDF';
+import PrimaryButton from '../common/PrimaryButton';
 
 const IconMapper = ({ iconName, className }) => {
   switch (iconName) {
-    case "document":
+    case 'document':
       return <FiFileText className={className} />;
-    case "squares":
+    case 'squares':
       return <FiGrid className={className} />;
-    case "puzzle":
+    case 'puzzle':
       return <FiLayers className={className} />;
-    case "rocket":
+    case 'rocket':
       return <FiTarget className={className} />;
-    case "flow-chart":
+    case 'flow-chart':
       return <FiLayers className={className} />;
-    case "api":
+    case 'api':
       return <FiCode className={className} />;
-    case "credit-card":
+    case 'credit-card':
       return <FiZap className={className} />;
     default:
       return <FiFileText className={className} />;
@@ -86,13 +88,12 @@ const ProcessCard = ({ stepData, isLast }) => {
 
         <p className="text-mutedText mb-6">{description}</p>
 
-        {type === "standard" ? (
+        {type === 'standard' ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <h4 className="flex items-center gap-2 md:text-lg font-semibold text-mutedText mb-3">
-                  <FiClipboard className="size-5 text-secondary" /> Purpose &
-                  Deliverables
+                  <FiClipboard className="size-5 text-secondary" /> Purpose & Deliverables
                 </h4>
                 <ul className="list-none space-y-2 text-mutedText ml-2">
                   {deliverables.map((item, i) => (
@@ -106,46 +107,41 @@ const ProcessCard = ({ stepData, isLast }) => {
               {collaboration && (
                 <div>
                   <h4 className="flex items-center gap-2 md:text-lg font-semibold text-mutedText mb-3">
-                    <FiUsers className="size-5 text-primary" /> Collaboration
-                    Points
+                    <FiUsers className="size-5 text-primary" /> Collaboration Points
                   </h4>
-                  <div
-                    className={`p-4 rounded-lg bg-cardBg border border-border`}
-                  >
-                    <p className="md:text-lg font-bold text-mutedText">
-                      {collaboration.main}
-                    </p>
-                    <p className="text-sm text-mutedText">
-                      {collaboration.note}
-                    </p>
+                  <div className={`p-4 rounded-lg bg-cardBg border border-border`}>
+                    <p className="md:text-lg font-bold text-mutedText">{collaboration.main}</p>
+                    <p className="text-sm text-mutedText">{collaboration.note}</p>
                   </div>
                 </div>
               )}
             </div>
 
-            {template && (
-              <a
-                href={template.link}
-                className="inline-flex items-center px-4 py-2 bg-cardBg text-mutedText rounded-lg 
-                  hover:bg-hoverCardBg transition-colors duration-200 text-sm font-medium"
-              >
-                <FiDownload className="size-5 mr-2" /> {template.text}
-              </a>
-            )}
+            <div className="w-fit">
+              {template && (
+                <PrimaryButton
+                  text="Download Step PDF"
+                  icon={FiDownload}
+                  onClick={() => generateStepPDF(stepData)}
+                  size="md"
+                  bgColor={iconBgColor}
+                  className="mt-3 rounded-md"
+                />
+              )}
+            </div>
           </>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <h4 className="flex items-center gap-2 text-lg font-semibold text-mutedText mb-3">
-                  <FiDollarSign className="size-5 text-secondary" /> Payment
-                  Structure
+                  <FiDollarSign className="size-5 text-secondary" /> Payment Structure
                 </h4>
                 <div className="space-y-3">
                   {paymentStructure.map((item, i) => (
                     <div
                       key={i}
-                      className={`flex justify-between items-center p-3 rounded-lg bg-primary/5 text-text`}
+                      className={`flex justify-between items-center p-3 rounded-lg bg-warningBg text-text`}
                     >
                       <span className="font-semibold">{item.percentage}</span>
                       <span className="text-sm">{item.description}</span>
@@ -168,15 +164,18 @@ const ProcessCard = ({ stepData, isLast }) => {
               </div>
             </div>
 
-            {template && (
-              <a
-                href={template.link}
-                className="inline-flex items-center px-4 mb-5 py-2 bg-cardBg text-mutedText rounded-lg 
-                  hover:bg-hoverCardBg transition-colors duration-200 text-sm font-medium"
-              >
-                <FiDownload className="size-5 mr-2" /> {template.text}
-              </a>
-            )}
+            <div className="w-fit mb-5">
+              {template && (
+                <PrimaryButton
+                  text="Download Step PDF"
+                  icon={FiDownload}
+                  onClick={() => generateStepPDF(stepData)}
+                  size="md"
+                  bgColor={iconBgColor}
+                  className="mt-3 rounded-md"
+                />
+              )}
+            </div>
 
             {qualityAssurance && (
               <div className="flex items-start p-4 rounded-lg bg-warningBg border border-warning text-warning">

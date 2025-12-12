@@ -1,36 +1,36 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import { FaLinkedin, FaGithub, FaRocket, FaFacebook } from "react-icons/fa";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { FaLinkedin, FaGithub, FaRocket, FaFacebook } from 'react-icons/fa';
 
 const MeetOurFounder = () => {
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "MD Farhan Sadik",
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'MD Farhan Sadik',
     image:
-      "https://storage.googleapis.com/uxpilot-auth.appspot.com/8c72e0b481-6e5102fb0a8d68c863aa.png",
-    jobTitle: "Founder & CEO",
+      'https://storage.googleapis.com/uxpilot-auth.appspot.com/8c72e0b481-6e5102fb0a8d68c863aa.png',
+    jobTitle: 'Founder & CEO',
     worksFor: {
-      "@type": "Organization",
-      name: "Farhan Sadik Digital Agency",
-      url: "https://farhansadik.vercel.app",
+      '@type': 'Organization',
+      name: 'Farhan Sadik Digital Agency',
+      url: 'https://farhansadik.vercel.app',
     },
     sameAs: [
-      "https://www.linkedin.com/in/mdsadikdev/",
-      "https://github.com/farhandotio",
-      "https://www.facebook.com/farhansadik.io",
+      'https://www.linkedin.com/in/mdsadikdev/',
+      'https://github.com/farhandotio',
+      'https://www.facebook.com/farhansadik.io',
     ],
     description:
-      "MD Farhan Sadik is a digital innovator with expertise in full-stack development, UI/UX design, and digital strategy, delivering high-impact projects for startups and enterprises.",
+      'I am a digital innovator with expertise in full-stack development, UI/UX design, and digital strategy, delivering high-impact products for diverse industries.',
   };
 
   return (
     <>
       <Helmet>
-        <title>Meet Our Founder — MD Farhan Sadik</title>
+        <title>Meet Me — MD Farhan Sadik</title>
         <meta
           name="description"
-          content="Learn about MD Farhan Sadik, founder of Farhan Sadik Digital Agency, with expertise in full-stack development, UI/UX design, and digital strategy."
+          content="Learn about me, MD Farhan Sadik, founder of Farhan Sadik Digital Agency, specializing in full-stack development, UI/UX design, and digital strategy."
         />
         <meta
           name="keywords"
@@ -38,40 +38,32 @@ const MeetOurFounder = () => {
         />
         <meta name="author" content="MD Farhan Sadik" />
 
-        {/* JSON-LD structured data */}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       <section className="py-30 bg-bg" aria-labelledby="founder-heading">
         <div className="flex flex-col lg:flex-row items-end gap-12">
           <div className="lg:w-3/4 w-full space-y-6">
-            <h1
-              id="founder-heading"
-              className="text-3xl font-extrabold text-text mb-5"
-            >
-              Meet Our Founder
+            <h1 id="founder-heading" className="text-3xl font-extrabold text-text mb-5">
+              Meet Me
             </h1>
 
-            <h2 className="text-2xl font-semibold text-primary">
-              MD Farhan Sadik
-            </h2>
+            <h2 className="text-2xl font-semibold text-primary">MD Farhan Sadik</h2>
 
             <p className="text-xl leading-relaxed text-mutedText">
-              With over 8 years of experience in digital innovation, Farhan
-              founded the agency with a vision to bridge the gap between
-              technology and business success. His expertise spans full-stack
-              development, UI/UX design, and digital strategy.
+              I started this agency with a clear vision: to build meaningful, high-performance
+              digital products that help brands grow with confidence. My work spans full-stack
+              development, UI/UX design, and digital strategy, allowing me to handle both the
+              creative and technical side of a project with precision.
             </p>
 
             <p className="text-xl leading-relaxed text-mutedText">
-              Farhan's passion for emerging technologies and user-centric design
-              has led to the successful delivery of numerous high-impact
-              projects for startups and Fortune 500 companies alike.
+              My passion for user experience and emerging technologies guides every product I build.
+              I focus on creating solutions that feel intuitive, perform flawlessly, and deliver
+              measurable impact for businesses of all sizes.
             </p>
 
-            {/* Social Links */}
             <div className="flex space-x-4 pt-4">
-              {/* LinkedIn */}
               <a
                 href="https://www.linkedin.com/in/mdsadikdev/"
                 target="_blank"
@@ -82,7 +74,6 @@ const MeetOurFounder = () => {
                 <FaLinkedin className="w-6 h-6" />
               </a>
 
-              {/* Facebook */}
               <a
                 href="https://www.facebook.com/farhansadik.io"
                 target="_blank"
@@ -93,7 +84,6 @@ const MeetOurFounder = () => {
                 <FaFacebook className="w-6 h-6" />
               </a>
 
-              {/* GitHub */}
               <a
                 href="https://github.com/farhandotio"
                 target="_blank"
@@ -106,17 +96,16 @@ const MeetOurFounder = () => {
             </div>
           </div>
 
-          {/* Founder Image */}
           <div className="lg:w-1/4 w-full relative">
             <div className="relative w-full aspect-square bg-cardBg rounded-3xl overflow-hidden shadow-2xl border-4 border-border">
               <img
                 src="https://ik.imagekit.io/iura/ppp.png?updatedAt=1761334141016"
-                alt="Farhan Ahmed, Founder of Farhan Sadik"
+                alt="MD Farhan Sadik"
                 className="w-full brightness-105 contrast-110 h-full object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src =
-                    "https://ik.imagekit.io/farhansadik/Agency/ppp.png?updatedAt=1761999834854";
+                    'https://ik.imagekit.io/farhansadik/Agency/ppp.png?updatedAt=1761999834854';
                 }}
               />
 

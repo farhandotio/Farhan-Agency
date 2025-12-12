@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import { Helmet } from 'react-helmet';
 import {
   SiReact,
   SiRedux,
@@ -13,7 +13,7 @@ import {
   SiOpenai,
   SiAmazon,
   SiDocker,
-} from "react-icons/si";
+} from 'react-icons/si';
 
 const TechIcon = ({ Icon, color, name }) => (
   <div
@@ -27,29 +27,28 @@ const TechIcon = ({ Icon, color, name }) => (
 
 const OurTechnologyStack = () => {
   const technologyData = [
-    { name: "React", Icon: SiReact, color: "text-blue-500" },
-    { name: "Redux", Icon: SiRedux, color: "text-violet-600" },
-    { name: "Tailwind CSS", Icon: SiTailwindcss, color: "text-sky-500" },
-    { name: "Git", Icon: SiGit, color: "text-red-500" },
-    { name: "Node.js", Icon: SiNodedotjs, color: "text-green-600" },
-    { name: "Express.js", Icon: SiExpress, color: "text-gray-700" },
-    { name: "MongoDB", Icon: SiMongodb, color: "text-green-700" },
-    { name: "JWT Auth", Icon: SiJsonwebtokens, color: "text-yellow-600" },
-    { name: "Socket.IO", Icon: SiSocketdotio, color: "text-indigo-600" },
-    { name: "AI / OpenAI", Icon: SiOpenai, color: "text-white" },
-    { name: "AWS", Icon: SiAmazon, color: "text-orange-500" },
-    { name: "Docker", Icon: SiDocker, color: "text-blue-600" },
+    { name: 'React', Icon: SiReact, color: 'text-blue-500' },
+    { name: 'Redux', Icon: SiRedux, color: 'text-violet-600' },
+    { name: 'Tailwind CSS', Icon: SiTailwindcss, color: 'text-sky-500' },
+    { name: 'Git', Icon: SiGit, color: 'text-red-500' },
+    { name: 'Node.js', Icon: SiNodedotjs, color: 'text-green-600' },
+    { name: 'Express.js', Icon: SiExpress, color: 'text-gray-700' },
+    { name: 'MongoDB', Icon: SiMongodb, color: 'text-green-700' },
+    { name: 'JWT Auth', Icon: SiJsonwebtokens, color: 'text-yellow-600' },
+    { name: 'Socket.IO', Icon: SiSocketdotio, color: 'text-indigo-600' },
+    { name: 'AI / OpenAI', Icon: SiOpenai, color: 'text-white' },
+    { name: 'AWS', Icon: SiAmazon, color: 'text-orange-500' },
+    { name: 'Docker', Icon: SiDocker, color: 'text-blue-600' },
   ];
 
-  // JSON-LD structured data for tech stack
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    headline: "Our Technology Stack",
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: 'My Technology Stack',
     description:
-      "Farhan Sadik Digital Agency leverages modern, performance-driven tools to build scalable and robust applications — from frontend UI to backend APIs and cloud infrastructure.",
+      'I leverage modern, performance-driven tools to build scalable and robust applications — from frontend UI to backend APIs and cloud infrastructure.',
     mentions: technologyData.map((tech) => ({
-      "@type": "DefinedTerm",
+      '@type': 'DefinedTerm',
       name: tech.name,
     })),
   };
@@ -57,10 +56,10 @@ const OurTechnologyStack = () => {
   return (
     <>
       <Helmet>
-        <title>Our Technology Stack — Farhan Sadik Digital Agency</title>
+        <title>My Technology Stack — Farhan Sadik Digital Agency</title>
         <meta
           name="description"
-          content="Explore the technology stack used by Farhan Sadik Digital Agency, including React, Redux, Tailwind CSS, Node.js, Express, MongoDB, and more."
+          content="Explore the technology stack I use, including React, Redux, Tailwind CSS, Node.js, Express, MongoDB, and more, to build modern web applications."
         />
         <meta
           name="keywords"
@@ -75,14 +74,14 @@ const OurTechnologyStack = () => {
             <h2
               id="tech-heading"
               className="text-4xl md:text-5xl font-extrabold text-text mb-8 leading-tight tracking-tight"
-              title="Complete technology stack for modern web applications"
+              title="My complete technology stack for modern web applications"
             >
-              Our Technology Stack
+              My Technology Stack
             </h2>
             <p className="text-xl mx-auto text-mutedText max-w-4xl">
-              We leverage modern, performance-driven tools to build scalable
-              and robust applications — from frontend UI to backend APIs and
-              cloud infrastructure.
+              I use modern, performance-driven tools to build scalable and robust applications —
+              from crafting intuitive frontend UI to building backend APIs and managing cloud
+              infrastructure.
             </p>
           </header>
 

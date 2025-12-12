@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CgMenuMotion } from "react-icons/cg";
 import Logo from "./Logo";
+import PrimaryButton from "./PrimaryButton";
 
 const navLinks = [
   { name: "SERVICES", href: "/services" },
@@ -38,7 +39,7 @@ const Navbar = () => {
         <Logo />
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center space-x-5 lg:space-x-12">
+        <nav className="hidden lg:flex items-center space-x-5 lg:space-x-8">
           <ul className="flex space-x-6 lg:space-x-8 uppercase text-sm md:text-xs lg:text-sm font-medium tracking-wide">
             {navLinks.map((link) => (
               <li key={link.name}>
@@ -46,7 +47,7 @@ const Navbar = () => {
                   to={link.href}
                   className={({ isActive }) =>
                     `transition duration-300 hover:text-primary ${
-                      isActive ? "text-primary font-semibold" : ""
+                      isActive ? 'text-primary font-semibold' : ''
                     }`
                   }
                 >
@@ -56,14 +57,12 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Dynamic Profile/Admin/Login Button */}
-          <NavLink
-            to={profileLink}
+          <PrimaryButton
+            text={user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
+            url={profileLink}
             onClick={scrollToTop}
-            className="flex items-center px-6 py-3 bg-primary hover:bg-hoverPrimary text-white font-semibold rounded-full text-sm transition duration-300 shadow-xl"
-          >
-            {user ? (user.role === "admin" ? "ADMIN" : "PROFILE") : "LOGIN"}
-          </NavLink>
+            className="rounded-full text-sm shadow-xl"
+          />
         </nav>
 
         {/* Mobile Menu */}
@@ -72,7 +71,7 @@ const Navbar = () => {
             scrollToTop();
             setMenuOpen(true);
           }}
-          className="lg:hidden uppercase text-3xl font-semibold tracking-wide rounded-full hover:bg-hoverPrimary hover:text-white transition duration-300"
+          className="lg:hidden uppercase text-3xl font-semibold tracking-wide rounded-full transition duration-300 cursor-pointer"
         />
       </div>
 
@@ -80,15 +79,15 @@ const Navbar = () => {
       <div
         role="dialog"
         aria-modal="true"
-        className={`fixed top-0 right-0 h-screen w-full sm:w-[60%] bg-bg/99 backdrop-blur-4xl text-text text-lg uppercase transform transition-transform duration-500 p-5 ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 right-0 h-screen w-full sm:w-[60%] bg-bg backdrop-blur-4xl text-text text-lg uppercase transform transition-transform duration-500 p-5 ${
+          menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex justify-between pb-10">
           <Logo />
           <button
             onClick={() => setMenuOpen(false)}
-            className="text-xl font-bold hover:text-primary transition"
+            className="text-xl font-bold hover:text-primary transition cursor-pointer"
           >
             ✕
           </button>
@@ -105,7 +104,7 @@ const Navbar = () => {
                 }}
                 className={({ isActive }) =>
                   `transition duration-300 hover:text-primary ${
-                    isActive ? "text-primary font-semibold" : ""
+                    isActive ? 'text-primary font-semibold' : ''
                   }`
                 }
               >
@@ -116,16 +115,16 @@ const Navbar = () => {
         </ul>
 
         {/* Dynamic Mobile Button */}
-        <NavLink
-          to={profileLink}
+        <PrimaryButton
+          text={user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
+          url={profileLink} // internal React Router link
           onClick={() => {
             scrollToTop();
             setMenuOpen(false);
           }}
-          className="flex items-center px-5 justify-center py-3 bg-primary hover:bg-hoverPrimary text-white font-semibold rounded-md text-md text-center transition duration-300 shadow-xl"
-        >
-          {user ? (user.role === "admin" ? "ADMIN" : "PROFILE") : "LOGIN"}
-        </NavLink>
+          size="lg"
+          className="rounded-md text-md text-center shadow-xl"
+        />
       </div>
     </header>
   );

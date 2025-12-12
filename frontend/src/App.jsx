@@ -1,18 +1,19 @@
 // App.jsx
-import React, { useEffect, useRef } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useRef } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { useDispatch } from 'react-redux';
 
-import { fetchProfile } from "./app/features/auth/authSlice";
+import { fetchProfile } from './app/features/auth/authSlice';
 
-import MainRoutes from "./routes/MainRoutes";
-import Navbar from "./components/common/Navbar";
-import Footer from "./components/common/Footer";
-import InitialLoader from "./components/common/InitialLoader";
+import MainRoutes from './routes/MainRoutes';
+import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
+import InitialLoader from './components/common/InitialLoader';
 
-import SmoothScroll from "./components/common/SmoothScroll";
-import ScrollToTop from "./components/common/ScrollToTop";
+import SmoothScroll from './components/common/SmoothScroll';
+import ScrollToTop from './components/common/ScrollToTop';
+import CursorEffect from './components/common/CursorEffect';
 
 const AppWrapper = () => {
   return (
@@ -50,6 +51,7 @@ const App = () => {
         <ScrollToTop />
 
         <main id="main-content" className="max-w-[1900px] mx-auto">
+          <CursorEffect />
           <MainRoutes />
         </main>
 

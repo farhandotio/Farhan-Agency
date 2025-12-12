@@ -1,5 +1,5 @@
-import React from "react";
-import { FaCode, FaServer, FaPalette, FaChartBar } from "react-icons/fa";
+import React from 'react';
+import { FaCode, FaServer, FaPalette, FaChartBar } from 'react-icons/fa';
 
 const TeamCard = ({ icon, title, description, colorStart, colorEnd }) => (
   <div
@@ -9,7 +9,6 @@ const TeamCard = ({ icon, title, description, colorStart, colorEnd }) => (
       flex flex-col items-center text-center h-full border border-border
     "
   >
-    {/* Gradient Circle Container */}
     <div
       className={`
         w-20 h-20 sm:w-24 sm:h-24 rounded-full 
@@ -18,14 +17,11 @@ const TeamCard = ({ icon, title, description, colorStart, colorEnd }) => (
         shadow-lg
       `}
     >
-      {/* Icon (Using react-icons) */}
-      {React.cloneElement(icon, { className: "w-10 h-10 text-white" })}
+      {React.cloneElement(icon, { className: 'w-10 h-10 text-white' })}
     </div>
 
-    {/* Title */}
     <h3 className="text-xl sm:text-2xl font-bold text-text mb-2">{title}</h3>
 
-    {/* Description */}
     <p className="text-md text-mutedText leading-relaxed">{description}</p>
   </div>
 );
@@ -33,31 +29,35 @@ const TeamCard = ({ icon, title, description, colorStart, colorEnd }) => (
 const ExpertTeam = () => {
   const teamData = [
     {
-      title: "Frontend Developers",
-      description: "React, Vue, Angular specialists",
-      colorStart: "from-teal-500",
-      colorEnd: "to-green-400",
+      title: 'Frontend Developers',
+      description:
+        'I collaborate with talented React, Vue, and Angular specialists to create responsive and intuitive interfaces.',
+      colorStart: 'from-teal-500',
+      colorEnd: 'to-green-400',
       icon: <FaCode />,
     },
     {
-      title: "Backend Engineers",
-      description: "Node.js, Python, cloud experts",
-      colorStart: "from-orange-500",
-      colorEnd: "to-amber-400",
+      title: 'Backend Engineers',
+      description:
+        'I work alongside Node.js, Python, and cloud experts to build reliable and scalable backend systems.',
+      colorStart: 'from-orange-500',
+      colorEnd: 'to-amber-400',
       icon: <FaServer />,
     },
     {
-      title: "UI/UX Designers",
-      description: "User-centered design experts",
-      colorStart: "from-green-400",
-      colorEnd: "to-teal-500",
+      title: 'UI/UX Designers',
+      description:
+        'I coordinate with user-centered design experts to craft engaging and seamless experiences.',
+      colorStart: 'from-green-400',
+      colorEnd: 'to-teal-500',
       icon: <FaPalette />,
     },
     {
-      title: "Project Managers",
-      description: "Agile methodology leaders",
-      colorStart: "from-amber-500",
-      colorEnd: "to-orange-500",
+      title: 'Project Managers',
+      description:
+        'I align with agile methodology leaders to ensure smooth project delivery and effective collaboration.',
+      colorStart: 'from-amber-500',
+      colorEnd: 'to-orange-500',
       icon: <FaChartBar />,
     },
   ];
@@ -67,15 +67,15 @@ const ExpertTeam = () => {
       <div className="mx-auto text-center">
         <header className="mb-16 md:mb-24">
           <h2
-            id="process-heading"
+            id="team-heading"
             className="text-4xl md:text-5xl font-extrabold text-text mb-8 leading-tight tracking-tight"
-            title="Complete software development process step-by-step"
+            title="My expert team working together"
           >
-            Our Expert Team
+            My Expert Team
           </h2>
           <p className="text-xl mx-auto text-mutedText max-w-4xl">
-            A diverse group of talented professionals working together to
-            deliver exceptional results.
+            I work with a diverse group of skilled professionals, each contributing their expertise
+            to deliver high-quality results for every project.
           </p>
         </header>
 

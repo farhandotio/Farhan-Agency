@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import PrimaryButton from '../common/PrimaryButton';
 
 const HeroSection = () => {
   return (
@@ -15,9 +16,18 @@ const HeroSection = () => {
             className="text-6xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-text"
             itemProp="headline"
           >
-            <span>MD Farhan <br className="md:hidden" /> Sadik</span> <br />
-            <span className="block pt-2 text-primary"> — <br className="md:hidden" /> Mern Stack, </span>
-            <span className="max-lg:block text-secondary"> Frontend <br className="md:hidden" /> & </span>
+            <span>
+              MD Farhan <br className="md:hidden" /> Sadik
+            </span>{' '}
+            <br />
+            <span className="block pt-2 text-primary">
+              {' '}
+              — <br className="md:hidden" /> Full Stack,{' '}
+            </span>
+            <span className="max-lg:block text-secondary">
+              {' '}
+              Frontend <br className="md:hidden" /> &{' '}
+            </span>
             <span className="max-lg:block"> Backend Developer </span>
           </h1>
 
@@ -25,17 +35,13 @@ const HeroSection = () => {
             className="mt-6 text-xl md:text-2xl leading-relaxed max-w-4xl text-mutedText"
             itemProp="description"
           >
-            I build modern, scalable web applications. From responsive
-            interfaces to robust backend systems, I turn digital ideas into
-            reality.
+            I build modern, scalable web applications. From responsive interfaces to robust backend
+            systems, I turn digital ideas into reality.
           </p>
 
-          <a
-            href="#projects"
-            className="md:mt-8 mt-5 inline-block bg-primary text-white font-semibold px-8 py-4 rounded-xl hover:bg-primary/90 transition"
-          >
-            View My Work
-          </a>
+          <div className="md:mt-8 mt-5 inline-block">
+            <PrimaryButton text="View My Work" href={'#projects'} size="xl" className='rounded-lg' />
+          </div>
         </div>
       </div>
 
@@ -50,28 +56,25 @@ const HeroSection = () => {
 
       <script type="application/ld+json">
         {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: "MD Farhan Sadik",
-          url: "https://farhan.dev.vercel.app",
-          sameAs: [
-            "https://github.com/farhandotio",
-            "https://www.linkedin.com/in/mdsadikdev",
-          ],
-          jobTitle: "Fullstack Developer",
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'MD Farhan Sadik',
+          url: 'https://farhan.dev.vercel.app',
+          sameAs: ['https://github.com/farhandotio', 'https://www.linkedin.com/in/mdsadikdev'],
+          jobTitle: 'Fullstack Developer',
           description:
-            "I build modern, scalable web applications. From responsive interfaces to robust backend systems, I turn digital ideas into reality.",
+            'I build modern, scalable web applications. From responsive interfaces to robust backend systems, I turn digital ideas into reality.',
         })}
       </script>
 
       <script type="application/ld+json">
         {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          name: "MD Farhan Sadik — Fullstack, Frontend & Backend Developer",
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'MD Farhan Sadik — Fullstack, Frontend & Backend Developer',
           description:
-            "I build modern, scalable web applications. From responsive interfaces to robust backend systems, I turn digital ideas into reality.",
-          url: "https://farhan.dev.vercel.app",
+            'I build modern, scalable web applications. From responsive interfaces to robust backend systems, I turn digital ideas into reality.',
+          url: 'https://farhan.dev.vercel.app',
         })}
       </script>
     </section>

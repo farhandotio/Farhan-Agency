@@ -1,29 +1,29 @@
-import React from "react";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const OurMission = () => {
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Farhan Sadik",
-    url: "https://farhansadik.vercel.app",
-    logo: "https://farhansadik.vercel.app/logo.png",
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Farhan Sadik',
+    url: 'https://farhansadik.vercel.app',
+    logo: 'https://farhansadik.vercel.app/logo.png',
     description:
-      "Farhan Sadik delivers cutting-edge digital solutions, combining strategic thinking, creative design, and technical expertise to create products that users love and businesses thrive on.",
+      'I deliver cutting-edge digital solutions by combining strategic thinking, creative design, and technical expertise to build products that users love and businesses thrive on.',
     sameAs: [
-      "https://www.linkedin.com/in/mdfarhansadik",
-      "https://github.com/master-farhan",
-      "https://www.twitter.com/yourhandle",
+      'https://www.linkedin.com/in/mdfarhansadik',
+      'https://github.com/master-farhan',
+      'https://www.twitter.com/yourhandle',
     ],
   };
 
   return (
     <>
       <Helmet>
-        <title>Our Mission — Farhan Sadik Digital Solutions</title>
+        <title>My Mission — Farhan Sadik Digital Solutions</title>
         <meta
           name="description"
-          content="At Farhan Sadik, we believe in technology transforming businesses. Our mission is to deliver innovative digital solutions that drive growth and engagement."
+          content="I believe in technology's ability to transform businesses. My mission is to deliver innovative digital solutions that drive measurable growth and meaningful user engagement."
         />
         <meta
           name="keywords"
@@ -31,7 +31,6 @@ const OurMission = () => {
         />
         <meta name="author" content="MD Farhan Sadik" />
 
-        {/* JSON-LD Structured Data */}
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
@@ -42,19 +41,19 @@ const OurMission = () => {
               id="mission-heading"
               className="text-3xl font-extrabold text-text mb-5 text-left font-inter"
             >
-              Our Mission
+              My Mission
             </h1>
+
             <p className="text-xl leading-relaxed mb-6 text-mutedText">
-              At Farhan Sadik, I believe in the power of technology to transform
-              businesses and create meaningful connections. Our mission is to
-              deliver cutting-edge digital solutions that not only meet our
-              clients' immediate needs but also position them for future
-              success.
+              I believe deeply in the power of technology to transform businesses, elevate
+              experiences, and create meaningful connections. My mission is to build digital
+              solutions that not only solve today's problems but also prepare brands for tomorrow’s
+              opportunities.
             </p>
+
             <p className="text-xl leading-relaxed text-mutedText">
-              I combine strategic thinking, creative design, and technical
-              expertise to build digital products that users love and businesses
-              thrive on.
+              I bring together strategic thinking, creative UI engineering, and strong technical
+              execution to craft products that users enjoy and businesses rely on for growth.
             </p>
           </div>
 
@@ -73,9 +72,7 @@ const OurMission = () => {
                 >
                   50+
                 </h2>
-                <p className="text-base text-mutedText uppercase font-medium">
-                  Projects Delivered
-                </p>
+                <p className="text-base text-mutedText uppercase font-medium">Projects Delivered</p>
               </div>
 
               <div className="text-left">
@@ -97,9 +94,7 @@ const OurMission = () => {
                 >
                   2+
                 </h2>
-                <p className="text-base text-mutedText uppercase font-medium">
-                  Years Experience
-                </p>
+                <p className="text-base text-mutedText uppercase font-medium">Years Experience</p>
               </div>
 
               <div className="text-left">
@@ -109,9 +104,7 @@ const OurMission = () => {
                 >
                   24/7
                 </h2>
-                <p className="text-base text-mutedText uppercase font-medium">
-                  Support
-                </p>
+                <p className="text-base text-mutedText uppercase font-medium">Support</p>
               </div>
             </div>
           </div>

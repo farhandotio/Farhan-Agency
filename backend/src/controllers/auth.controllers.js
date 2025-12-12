@@ -1,42 +1,38 @@
 // controllers/auth.controllers.js
-import userModel from "../models/user.model.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import uploadFile from "../services/storage.service.js";
-import fs from "fs/promises";
-import path from "path";
+import userModel from '../models/user.model.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import uploadFile from '../services/storage.service.js';
+import fs from 'fs/promises';
+import path from 'path';
 
 // -------------------- AUTH HELPERS -------------------- //
 
 const generateToken = (user) =>
   jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
+    expiresIn: '7d',
   });
 
 const sendTokenCookie = (res, token) => {
-  res.cookie("token", token, {
+  res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: 1000 * 60 * 60 * 24 * 7,
-    path: "/",
+    path: '/',
   });
 };
 
 const extractFullname = (body) => {
   const firstName =
-    body["fullname.firstName"] ||
+    body['fullname.firstName'] ||
     body.fullname?.firstName ||
     body.firstName ||
     body.first_name ||
     null;
 
   const lastName =
-    body["fullname.lastName"] ||
-    body.fullname?.lastName ||
-    body.lastName ||
-    body.last_name ||
-    null;
+    body['fullname.lastName'] || body.fullname?.lastName || body.lastName || body.last_name || null;
 
   return { firstName, lastName };
 };
@@ -46,7 +42,7 @@ const getFileDataFromReqFile = async (file) => {
 
   // memoryStorage
   if (file.buffer) {
-    const base64 = file.buffer.toString("base64");
+    const base64 = file.buffer.toString('base64');
     return {
       dataUrl: `data:${file.mimetype};base64,${base64}`,
       filename: file.originalname || `upload-${Date.now()}`,
@@ -57,19 +53,16 @@ const getFileDataFromReqFile = async (file) => {
   if (file.path) {
     try {
       const buf = await fs.readFile(file.path);
-      const ext = path.extname(file.originalname || file.filename || "");
-      const mime =
-        file.mimetype || (ext ? `image/${ext.replace(".", "")}` : "");
-      const base64 = buf.toString("base64");
+      const ext = path.extname(file.originalname || file.filename || '');
+      const mime = file.mimetype || (ext ? `image/${ext.replace('.', '')}` : '');
+      const base64 = buf.toString('base64');
 
       return {
-        dataUrl: mime
-          ? `data:${mime};base64,${base64}`
-          : `data:;base64,${base64}`,
+        dataUrl: mime ? `data:${mime};base64,${base64}` : `data:;base64,${base64}`,
         filename: file.originalname || `upload-${Date.now()}`,
       };
     } catch (err) {
-      console.error("Error reading uploaded file from disk:", err);
+      console.error('Error reading uploaded file from disk:', err);
       return null;
     }
   }
@@ -89,7 +82,7 @@ export async function register(req, res) {
     const { firstName, lastName } = extractFullname(req.body);
 
     if (!email || !password || !firstName || !lastName) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const normalizedEmail = String(email).trim().toLowerCase();
@@ -97,7 +90,7 @@ export async function register(req, res) {
     // Check existing user
     const isUserExist = await userModel.findOne({ email: normalizedEmail });
     if (isUserExist) {
-      return res.status(409).json({ message: "User already exists" });
+      return res.status(409).json({ message: 'User already exists' });
     }
 
     // Profile Picture
@@ -106,15 +99,8 @@ export async function register(req, res) {
     if (req.file) {
       const fileData = await getFileDataFromReqFile(req.file);
       if (fileData?.dataUrl) {
-        const uploadResp = await uploadFile(
-          fileData.dataUrl,
-          fileData.filename
-        );
-        pictureUrl =
-          uploadResp?.url ||
-          uploadResp?.secure_url ||
-          uploadResp?.filePath ||
-          null;
+        const uploadResp = await uploadFile(fileData.dataUrl, fileData.filename);
+        pictureUrl = uploadResp?.url || uploadResp?.secure_url || uploadResp?.filePath || null;
       }
     }
 
@@ -122,24 +108,14 @@ export async function register(req, res) {
     if (!pictureUrl && (req.body.file || req.body.picture)) {
       const fileFromBody = req.body.file || req.body.picture;
 
-      if (typeof fileFromBody === "string") {
-        if (
-          fileFromBody.startsWith("data:") &&
-          fileFromBody.includes("base64,")
-        ) {
-          const uploadResp = await uploadFile(
-            fileFromBody,
-            `upload-${Date.now()}`
-          );
-          pictureUrl =
-            uploadResp?.url ||
-            uploadResp?.secure_url ||
-            uploadResp?.filePath ||
-            null;
+      if (typeof fileFromBody === 'string') {
+        if (fileFromBody.startsWith('data:') && fileFromBody.includes('base64,')) {
+          const uploadResp = await uploadFile(fileFromBody, `upload-${Date.now()}`);
+          pictureUrl = uploadResp?.url || uploadResp?.secure_url || uploadResp?.filePath || null;
         } else {
           pictureUrl = fileFromBody; // direct URL
         }
-      } else if (typeof fileFromBody === "object" && fileFromBody.url) {
+      } else if (typeof fileFromBody === 'object' && fileFromBody.url) {
         pictureUrl = fileFromBody.url;
       }
     }
@@ -160,7 +136,7 @@ export async function register(req, res) {
     sendTokenCookie(res, token);
 
     res.status(201).json({
-      message: "User created successfully!",
+      message: 'User created successfully!',
       user: {
         id: user._id,
         email: user.email,
@@ -171,8 +147,8 @@ export async function register(req, res) {
       },
     });
   } catch (error) {
-    console.error("Register error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error('Register error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
@@ -183,30 +159,27 @@ export async function login(req, res) {
     const { email, password } = req.body || {};
 
     if (!email || !password)
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      return res.status(400).json({ message: 'Email and password are required' });
 
     const normalizedEmail = String(email).trim().toLowerCase();
 
     const user = await userModel.findOne({ email: normalizedEmail });
-    if (!user) return res.status(401).json({ message: "Invalid credentials" });
+    if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
     if (!user.password) {
       return res.status(400).json({
-        message: "Account registered via Google. Please login with Google.",
+        message: 'Account registered via Google. Please login with Google.',
       });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid)
-      return res.status(401).json({ message: "Invalid credentials" });
+    if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
 
     const token = generateToken(user);
     sendTokenCookie(res, token);
 
     res.status(200).json({
-      message: "Login successful!",
+      message: 'Login successful!',
       user: {
         id: user._id,
         email: user.email,
@@ -217,43 +190,39 @@ export async function login(req, res) {
       },
     });
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ message: "Server error" });
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
 // -------------------- PROFILE -------------------- //
 
 export async function getProfile(req, res) {
-  try {
-    const userId = req.user.id;
+  const userId = req.user.id;
 
-    const user = await userModel.findById(userId);
+  const user = await userModel.findById(userId);
 
-    res.status(200).json({
-      user: {
-        id: user._id,
-        email: user.email,
-        fullname: user.fullname,
-        picture: user.picture,
-        company: user.company,
-        role: user.role,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
+  res.status(200).json({
+    user: {
+      id: user._id,
+      email: user.email,
+      fullname: user.fullname,
+      picture: user.picture,
+      company: user.company,
+      role: user.role,
+    },
+  });
 }
 
 // -------------------- ALL USERS -------------------- //
 
 export async function getAllUsers(req, res) {
   try {
-    const users = await userModel.find().select("-password");
+    const users = await userModel.find().select('-password');
     res.status(200).json({ users });
   } catch (err) {
-    console.error("Get all users error:", err);
-    res.status(500).json({ message: "Server error" });
+    console.error('Get all users error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
@@ -261,17 +230,17 @@ export async function getAllUsers(req, res) {
 
 export async function logout(req, res) {
   try {
-    res.clearCookie("token", {
+    res.clearCookie('token', {
       httpOnly: true,
-      sameSite: "none",
+      sameSite: 'none',
       secure: true,
-      path: "/",
+      path: '/',
     });
 
-    res.status(200).json({ message: "Logged out successfully" });
+    res.status(200).json({ message: 'Logged out successfully' });
   } catch (err) {
-    console.error("Logout error:", err);
-    res.status(500).json({ message: "Server error" });
+    console.error('Logout error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 }
 
@@ -279,19 +248,15 @@ export async function logout(req, res) {
 export async function updateProfile(req, res) {
   try {
     const user = req.user; // VerifyToken middleware sets this
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
     const updates = {};
 
     // Fullname
     const firstName =
-      req.body["fullname.firstName"] ||
-      req.body.fullname?.firstName ||
-      req.body.firstName;
+      req.body['fullname.firstName'] || req.body.fullname?.firstName || req.body.firstName;
     const lastName =
-      req.body["fullname.lastName"] ||
-      req.body.fullname?.lastName ||
-      req.body.lastName;
+      req.body['fullname.lastName'] || req.body.fullname?.lastName || req.body.lastName;
 
     if (firstName || lastName) {
       updates.fullname = {
@@ -310,18 +275,12 @@ export async function updateProfile(req, res) {
       try {
         const fileData = await getFileDataFromReqFile(req.file);
         if (fileData?.dataUrl) {
-          const uploadResp = await uploadFile(
-            fileData.dataUrl,
-            fileData.filename
-          );
+          const uploadResp = await uploadFile(fileData.dataUrl, fileData.filename);
           updates.picture =
-            uploadResp?.url ||
-            uploadResp?.secure_url ||
-            uploadResp?.filePath ||
-            null;
+            uploadResp?.url || uploadResp?.secure_url || uploadResp?.filePath || null;
         }
       } catch (err) {
-        console.error("Profile image upload failed:", err);
+        console.error('Profile image upload failed:', err);
       }
     }
 
@@ -330,14 +289,14 @@ export async function updateProfile(req, res) {
       .findByIdAndUpdate(user._id, updates, {
         new: true,
       })
-      .select("-password");
+      .select('-password');
 
     res.status(200).json({
-      message: "Profile updated successfully!",
+      message: 'Profile updated successfully!',
       user: updatedUser,
     });
   } catch (err) {
-    console.error("Update profile error:", err);
-    res.status(500).json({ message: "Server error" });
+    console.error('Update profile error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 }

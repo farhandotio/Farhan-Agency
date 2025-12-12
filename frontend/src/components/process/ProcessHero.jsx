@@ -17,7 +17,7 @@ const ProcessHero = () => {
           {/* 1. 4-8 Week Timeline */}
           <div className="flex items-center text-mutedText text-base md:text-lg font-medium py-2">
             <FiClock className="size-5 md:size-6 text-primary mr-2" />
-            <span>4-8 Week Timeline</span>
+            <span>1-4 Week Timeline</span>
           </div>
 
           {/* 2. Collaborative Approach */}

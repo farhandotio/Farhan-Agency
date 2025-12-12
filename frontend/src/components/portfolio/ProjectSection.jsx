@@ -1,10 +1,12 @@
 // src/components/ProjectSection.jsx
-import React, { useEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { IoArrowDown } from "react-icons/io5";
-import { FiArrowUpRight } from "react-icons/fi";
-import axios from "axios";
-import Skeleton from "../common/Skeleton";
+import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { IoArrowDown } from 'react-icons/io5';
+import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi';
+import axios from 'axios';
+import Skeleton from '../common/Skeleton';
+import PrimaryButton from '../common/PrimaryButton';
+import SectionHeader from '../common/SectionHeader';
 
 const HoverProjectCard = ({
   project,
@@ -14,21 +16,20 @@ const HoverProjectCard = ({
   isDesktop,
   isLast,
 }) => {
-  const id =
-    project._id || project.id || encodeURIComponent(project.title || "project");
+  const id = project._id || project.id || encodeURIComponent(project.title || 'project');
 
   const linkProps = {
     to: `/projects/${id}`,
-    className: `group w-full text-left flex justify-between items-center cursor-pointer hover:bg-hoverCardBg focus:outline-none transition-all duration-300 ${
-      isLast ? "" : "border-b border-border"
+    className: `group w-full text-left flex justify-between items-center cursor-pointer focus:outline-none transition-all duration-300 ${
+      isLast ? '' : 'border-b border-border'
     }`,
-    "aria-label": `Open project ${project.title}`,
+    'aria-label': `Open project ${project.title}`,
   };
 
   if (!isDesktop) {
     return (
       <Link {...linkProps}>
-        <div className="bg-cardBg rounded-xl overflow-hidden shadow-lg mb-4 transition-transform hover:scale-[1.02] duration-300 border border-border p-0">
+        <div className="bg-cardBg w-full rounded-xl overflow-hidden shadow-lg mb-5 transition-transform duration-300 border border-border p-0">
           <img
             src={project.image}
             alt={project.title}
@@ -36,9 +37,7 @@ const HoverProjectCard = ({
             loading="lazy"
           />
           <div className="p-5">
-            <h3 className="text-2xl font-bold text-text tracking-wide">
-              {project.title}
-            </h3>
+            <h3 className="text-2xl font-bold text-text tracking-wide">{project.title}</h3>
           </div>
         </div>
       </Link>
@@ -46,7 +45,12 @@ const HoverProjectCard = ({
   }
 
   return (
-    <Link {...linkProps} onMouseEnter={(e) => onMouseEnter?.(e, project.image)} onMouseLeave={onMouseLeave} onMouseMove={onMouseMove}>
+    <Link
+      {...linkProps}
+      onMouseEnter={(e) => onMouseEnter?.(e, project.image)}
+      onMouseLeave={onMouseLeave}
+      onMouseMove={onMouseMove}
+    >
       <div className="flex items-center gap-5 w-full max-w-4xl py-6 md:py-8 lg:py-10 group-hover:pl-5 transition-all duration-300">
         <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-text tracking-tight transition-all duration-300">
           {project.title}
@@ -63,29 +67,29 @@ const ProjectSection = () => {
   const [projects, setProjects] = useState([]);
   const [hoveredImage, setHoveredImage] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isDesktop, setIsDesktop] = useState(typeof window !== "undefined" ? window.innerWidth >= 768 : true);
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 768 : true
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     handleResize();
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
     async function fetchProject() {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "https://farhan-agency-wryw.onrender.com/api/projects"
-        );
+        const response = await axios.get('https://farhan-agency-wryw.onrender.com/api/projects');
 
         const allProjects = response.data.projects || [];
         const featuredProjects = allProjects.slice(0, 5);
         setProjects(featuredProjects);
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error('Error fetching projects:', error);
       } finally {
         setLoading(false);
       }
@@ -117,16 +121,16 @@ const ProjectSection = () => {
   }, [isDesktop]);
 
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "MD Farhan Sadik — Featured Projects",
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'MD Farhan Sadik — Featured Projects',
     description:
-      "A selection of web development projects built by MD Farhan Sadik, showcasing responsive interfaces, modern frontend and backend solutions, and scalable code.",
+      'A selection of web development projects built by MD Farhan Sadik, showcasing responsive interfaces, modern frontend and backend solutions, and scalable code.',
     itemListElement: projects.map((p, i) => ({
-      "@type": "ListItem",
+      '@type': 'ListItem',
       position: i + 1,
       item: {
-        "@type": "CreativeWork",
+        '@type': 'CreativeWork',
         name: p.title,
         description: p.description,
         url: p.liveUrl,
@@ -136,29 +140,18 @@ const ProjectSection = () => {
   };
 
   return (
-    <section id="projects" className="bg-bg text-text p-5 md:p-7 lg:p-10 scroll-mt-20 mb-30 relative">
-      <header className="mb-16 md:mb-24 text-center lg:text-left">
-        <div className="flex justify-between w-full gap-2">
-          <h2 id="projects-heading" className="text-4xl md:text-5xl font-extrabold text-text mb-8 leading-tight tracking-tight w-full">
-            Featured Projects
-          </h2>
-          <Link
-            to={"/projects"}
-            className="flex whitespace-nowrap h-fit max-md:hidden w-fit mx-auto gap-2 bg-cardBg hover:bg-primary text-text font-semibold px-6 py-3 rounded-full transition-all"
-            aria-label="All Projects"
-          >
-            <span> All Projects </span>
-            <IoArrowDown className="text-xl md:text-2xl -rotate-135" />
-          </Link>
-        </div>
-        <p className="text-mutedText max-w-4xl text-lg">
-          Explore some of the modern web applications I’ve built using React,
-          Redux, and other modern technologies — optimized for performance,
-          accessibility, and scalability.
-        </p>
-      </header>
+    <section
+      id="projects"
+      className="bg-bg text-text p-5 md:p-7 lg:p-10 scroll-mt-20 mb-30 relative"
+    >
+      <SectionHeader
+        title="Featured Projects"
+        description="Explore some of the modern web applications I’ve built using React, Redux, and other
+          modern technologies — optimized for performance, accessibility, and scalability."
+        size="lg"
+      />
 
-      <div className={isDesktop ? "grid grid-cols-1 gap-0" : "grid grid-cols-1 gap-4"}>
+      <div className={isDesktop ? 'grid grid-cols-1 gap-0' : 'grid grid-cols-1 gap-5'}>
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="rounded-lg mb-6">
@@ -186,7 +179,7 @@ const ProjectSection = () => {
           style={{
             left: mousePosition.x,
             top: mousePosition.y,
-            transform: "translate(-50%, calc(-100% - 10px))",
+            transform: 'translate(-50%, calc(-100% - 10px))',
           }}
         >
           <img
@@ -198,7 +191,10 @@ const ProjectSection = () => {
         </div>
       )}
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </section>
   );
 };

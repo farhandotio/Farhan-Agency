@@ -8,31 +8,24 @@ import SectionHeader from "../components/common/SectionHeader";
 const About = () => {
   return (
     <main className="bg-bg text-text p-5 md:p-7 lg:p-10 mt-20">
-      {/* -------- Hero Section -------- */}
       <SectionHeader
-        title="About Farhan Sadik"
-        description="MD Farhan Sadik is a passionate web developer dedicated to
-            transforming ideas into exceptional digital experiences that drive
-            business growth and user engagement."
+        title="About Me"
+        description="I am Farhan Sadik, a passionate web developer committed to turning ideas into high-quality digital products that create real impact. I focus on building experiences that solve problems, support business growth, and feel effortless for users."
         size="lg"
       />
 
-      {/* -------- Mission Section -------- */}
       <section aria-labelledby="mission-section">
         <OurMission />
       </section>
 
-      {/* -------- Founder Section -------- */}
       <section aria-labelledby="founder-section">
         <MeetOurFounder />
       </section>
 
-      {/* Expert Team Section (Hidden for now) */}
-      {/* <section aria-labelledby="team-section">
+      <section aria-labelledby="team-section">
         <ExpertTeam />
-      </section> */}
+      </section>
 
-      {/* -------- Tech Stack Section -------- */}
       <section aria-labelledby="techstack-section">
         <OurTechnologyStack />
       </section>
