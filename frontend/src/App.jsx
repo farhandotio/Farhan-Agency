@@ -44,7 +44,7 @@ const App = () => {
       <SmoothScroll />
 
       <div className="relative bg-bg text-text min-h-screen">
-        <InitialLoader minDuration={900} />
+        {/* <InitialLoader minDuration={500} /> */}
         <Navbar />
 
         {/* Smooth ScrollToTop */}

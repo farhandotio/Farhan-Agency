@@ -1,82 +1,139 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PrimaryButton from '../common/PrimaryButton';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
+  const heroRef = useRef(null);
+  const h1TextRef = useRef(null);
+  const pTextRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const h1Spans = Array.from(h1TextRef.current.querySelectorAll('span'));
+      const pText = pTextRef.current;
+      const button = buttonRef.current;
+
+      /* ---------------- INITIAL STATE ---------------- */
+      gsap.set(h1Spans, {
+        opacity: 0,
+        x: (i) => (i % 2 === 0 ? -80 : 80),
+      });
+
+      gsap.set([pText, button], {
+        opacity: 0,
+        y: 30,
+      });
+
+      /* ---------------- APPEAR ANIMATION ---------------- */
+      const appearTl = gsap.timeline({
+        defaults: {
+          ease: 'power3.out',
+          duration: 1,
+        },
+      });
+
+      appearTl
+        .to(h1Spans, {
+          opacity: 1,
+          x: 0,
+          stagger: 0.15,
+        })
+        .to(
+          [pText, button],
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.15,
+          },
+          '-=0.6'
+        );
+
+      /* ---------------- SCROLL ANIMATION ---------------- */
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top+=150 top',
+          end: 'bottom top',
+          scrub: 1.2,
+        },
+      });
+
+      scrollTl
+        .to(h1Spans, {
+          x: (i) => (i % 2 === 0 ? -300 : 300),
+          opacity: 0,
+          ease: 'none',
+        })
+        .to(
+          [pText],
+          {
+            opacity: 0,
+            y: -20,
+            ease: 'none',
+          },
+          0
+        );
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
-      className="bg-bg overflow-hidden min-h-[650px] pt-15 flex items-center"
+      ref={heroRef}
+      className="relative min-h-[650px] pt-15 flex items-center"
       aria-label="MD Farhan Sadik Portfolio"
-      itemScope
-      itemType="https://schema.org/WebPage"
       role="region"
     >
-      <div className="p-5 sm:p-7 lg:p-10 flex flex-col items-center">
-        <div className="mb-12 lg:mb-0 text-center lg:text-left">
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow delay-1000"></div>
+      </div>
+
+      <div className="relative z-10 p-5 sm:p-7 lg:p-10 flex flex-col items-center w-full">
+        <div className="mb-12 lg:mb-0 justify-center text-center  mx-auto">
           <h1
-            className="text-6xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-text"
-            itemProp="headline"
+            ref={h1TextRef}
+            className="text-6xl md:text-6xl lg:text-7xl font-extrabold leading-tight"
           >
-            <span>
+            <span className="inline-block will-change-transform text-white text-shadow-lg-white">
               MD Farhan <br className="md:hidden" /> Sadik
-            </span>{' '}
+            </span>
             <br />
-            <span className="block pt-2 text-primary">
-              {' '}
-              — <br className="md:hidden" /> Full Stack,{' '}
+            <span className="block pt-2 text-primary will-change-transform text-shadow-lg-cyan">
+              — <br className="md:hidden" /> Full Stack,
             </span>
-            <span className="max-lg:block text-secondary">
-              {' '}
-              Frontend <br className="md:hidden" /> &{' '}
+            <span className="max-lg:block text-secondary inline-block will-change-transform text-shadow-lg-fuchsia">
+              Frontend <br className="md:hidden" /> & {" "}
             </span>
-            <span className="max-lg:block"> Backend Developer </span>
+            <span className="max-lg:block inline-block will-change-transform text-white text-shadow-lg-white">
+              {' '}
+              Backend Developer
+            </span>
           </h1>
 
           <p
-            className="mt-6 text-xl md:text-2xl leading-relaxed max-w-4xl text-mutedText"
-            itemProp="description"
+            ref={pTextRef}
+            className="mt-6 text-xl md:text-2xl leading-relaxed text-mutedText will-change-transform"
           >
             I build modern, scalable web applications. From responsive interfaces to robust backend
             systems, I turn digital ideas into reality.
           </p>
 
-          <div className="md:mt-8 mt-5 inline-block">
-            <PrimaryButton text="View My Work" href={'#projects'} size="xl" className='rounded-lg' />
+          <div ref={buttonRef} className="md:mt-8 mt-5 inline-block will-change-transform">
+            <PrimaryButton
+              text="View My Work"
+              href="#projects"
+              size="xl"
+              className="rounded-lg shadow-lg shadow-primary/50"
+            />
           </div>
         </div>
       </div>
-
-      <meta
-        name="description"
-        content="MD Farhan Sadik — Fullstack, Frontend, and Backend Developer. I build modern, responsive web applications with scalable code and clean design."
-      />
-      <meta
-        name="keywords"
-        content="MD Farhan Sadik, fullstack developer, frontend developer, backend developer, personal portfolio, web development, responsive web apps"
-      />
-
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Person',
-          name: 'MD Farhan Sadik',
-          url: 'https://farhan.dev.vercel.app',
-          sameAs: ['https://github.com/farhandotio', 'https://www.linkedin.com/in/mdsadikdev'],
-          jobTitle: 'Fullstack Developer',
-          description:
-            'I build modern, scalable web applications. From responsive interfaces to robust backend systems, I turn digital ideas into reality.',
-        })}
-      </script>
-
-      <script type="application/ld+json">
-        {JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'WebPage',
-          name: 'MD Farhan Sadik — Fullstack, Frontend & Backend Developer',
-          description:
-            'I build modern, scalable web applications. From responsive interfaces to robust backend systems, I turn digital ideas into reality.',
-          url: 'https://farhan.dev.vercel.app',
-        })}
-      </script>
     </section>
   );
 };

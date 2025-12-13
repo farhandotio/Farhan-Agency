@@ -1,14 +1,15 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import HeroSection from "../components/portfolio/HeroSection";
-import ServiceSection from "../components/portfolio/ServiceSection";
-import HowToWork from "../components/portfolio/HowToWork";
-import ProjectSection from "../components/portfolio/ProjectSection";
-import Testimonials from "../components/portfolio/Testimonials";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import HeroSection from '../components/portfolio/HeroSection';
+import ServiceSection from '../components/portfolio/ServiceSection';
+import HowToWork from '../components/portfolio/HowToWork';
+import ProjectSection from '../components/portfolio/ProjectSection';
+import Testimonials from '../components/portfolio/Testimonials';
+import Code from '../components/portfolio/Code';
 
 const Portfolio = () => {
   return (
-    <>
+    <div className="overflow-x-hidden">
       {/* SEO Metadata */}
       <Helmet>
         <title>MD Farhan Sadik — Fullstack Developer Portfolio</title>
@@ -25,11 +26,12 @@ const Portfolio = () => {
 
       {/* Portfolio Sections */}
       <HeroSection />
+      <Code />
       <ServiceSection />
-      <HowToWork />
+      {/* <HowToWork /> */}
       <ProjectSection />
       <Testimonials />
-    </>
+    </div>
   );
 };
 

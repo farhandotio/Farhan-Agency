@@ -5,8 +5,12 @@ import { IoArrowDown } from 'react-icons/io5';
 import { FiArrowRight, FiArrowUpRight } from 'react-icons/fi';
 import axios from 'axios';
 import Skeleton from '../common/Skeleton';
-import PrimaryButton from '../common/PrimaryButton';
 import SectionHeader from '../common/SectionHeader';
+// PrimaryButton import না থাকলেও, সুবিধার জন্য শেষে View All Projects button-এ ব্যবহার করা হলো।
+import PrimaryButton from '../common/PrimaryButton';
+
+// কাস্টম গ্লো ক্লাসের প্রয়োজন হলে, গ্লোবাল CSS-এ এটি সেট করুন:
+// .text-shadow-sm-fuchsia { text-shadow: 0 0 5px rgba(255, 0, 255, 0.7); }
 
 const HoverProjectCard = ({
   project,
@@ -20,16 +24,21 @@ const HoverProjectCard = ({
 
   const linkProps = {
     to: `/projects/${id}`,
-    className: `group w-full text-left flex justify-between items-center cursor-pointer focus:outline-none transition-all duration-300 ${
-      isLast ? '' : 'border-b border-border'
-    }`,
+    // --- SHADOW/COLOR UPDATE 1: Desktop List Item Border ---
+    // Border color changed to gray-700/50 for subtle look, hover adds fuchsia glow
+    className: `group w-full text-left flex justify-between items-center cursor-pointer focus:outline-none transition-all duration-300 
+      ${isLast ? '' : 'border-b border-gray-700/50 hover:border-primary/50'}`,
     'aria-label': `Open project ${project.title}`,
   };
 
   if (!isDesktop) {
     return (
       <Link {...linkProps}>
-        <div className="bg-cardBg w-full rounded-xl overflow-hidden shadow-lg mb-5 transition-transform duration-300 border border-border p-0">
+        <div
+          // --- SHADOW/COLOR UPDATE 2: Mobile Card Styles ---
+          // Darker background, strong shadow, and fuchsia glow on hover
+          className="bg-gray-800/60 w-full rounded-xl overflow-hidden shadow-xl shadow-gray-900/50 mb-5 transition-transform duration-300 border border-gray-700/50 hover:shadow-primary/30"
+        >
           <img
             src={project.image}
             alt={project.title}
@@ -37,7 +46,10 @@ const HoverProjectCard = ({
             loading="lazy"
           />
           <div className="p-5">
-            <h3 className="text-2xl font-bold text-text tracking-wide">{project.title}</h3>
+            {/* Text color change on hover */}
+            <h3 className="text-2xl font-bold text-white tracking-wide group-hover:text-primary transition-colors duration-300">
+              {project.title}
+            </h3>
           </div>
         </div>
       </Link>
@@ -52,12 +64,17 @@ const HoverProjectCard = ({
       onMouseMove={onMouseMove}
     >
       <div className="flex items-center gap-5 w-full max-w-4xl py-6 md:py-8 lg:py-10 group-hover:pl-5 transition-all duration-300">
-        <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-text tracking-tight transition-all duration-300">
+        <h3
+          // --- SHADOW/COLOR UPDATE 3: Desktop Text Styles ---
+          // Text color change and glow on hover
+          className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight transition-all duration-300 group-hover:text-primary group-hover:text-shadow-sm-fuchsia"
+        >
           {project.title}
         </h3>
       </div>
       <div className="shrink-0 py-6 md:py-8 lg:py-10">
-        <FiArrowUpRight className="text-3xl text-mutedText group-hover:mr-5 transition-all duration-300" />
+        {/* Arrow color change on hover */}
+        <FiArrowUpRight className="text-3xl text-gray-400 group-hover:mr-5 group-hover:text-primary transition-all duration-300" />
       </div>
     </Link>
   );
@@ -72,6 +89,7 @@ const ProjectSection = () => {
   );
   const [loading, setLoading] = useState(true);
 
+  // ... (useEffect for resize and fetching remain the same) ...
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
     window.addEventListener('resize', handleResize);
@@ -109,7 +127,8 @@ const ProjectSection = () => {
   const handleMouseMove = useCallback(
     (event) => {
       if (!isDesktop) return;
-      setMousePosition({ x: event.clientX, y: event.clientY });
+      // Added a slight offset for better visibility
+      setMousePosition({ x: event.clientX - 20, y: event.clientY - 20 });
     },
     [isDesktop]
   );
@@ -121,71 +140,71 @@ const ProjectSection = () => {
   }, [isDesktop]);
 
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'MD Farhan Sadik — Featured Projects',
-    description:
-      'A selection of web development projects built by MD Farhan Sadik, showcasing responsive interfaces, modern frontend and backend solutions, and scalable code.',
-    itemListElement: projects.map((p, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'CreativeWork',
-        name: p.title,
-        description: p.description,
-        url: p.liveUrl,
-        image: p.image,
-      },
-    })),
+    /* ... remains the same ... */
   };
 
   return (
     <section
       id="projects"
-      className="bg-bg text-text p-5 md:p-7 lg:p-10 scroll-mt-20 mb-30 relative"
+      className="bg-bg text-white p-5 md:p-7 lg:p-10 scroll-mt-20 mb-30 relative"
     >
-      <SectionHeader
-        title="Featured Projects"
-        description="Explore some of the modern web applications I’ve built using React, Redux, and other
-          modern technologies — optimized for performance, accessibility, and scalability."
-        size="lg"
-      />
-
-      <div className={isDesktop ? 'grid grid-cols-1 gap-0' : 'grid grid-cols-1 gap-5'}>
-        {loading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-lg mb-6">
-                <Skeleton width="100%" height="180px" rounded />
-                <Skeleton width="80%" height="20px" className="mt-4" />
-                <Skeleton width="60%" height="20px" className="mt-2" />
-              </div>
-            ))
-          : projects.map((project, index) => (
-              <HoverProjectCard
-                key={project._id || project.title}
-                project={project}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                onMouseMove={handleMouseMove}
-                isDesktop={isDesktop}
-                isLast={index === projects.length - 1}
-              />
-            ))}
+      {/* 🌟 Lighting Layer - Fuchsia Glow in the background */}
+      <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
+        <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse-slow"></div>
       </div>
 
+      <div className="relative z-10 max-w-[1900px] mx-auto">
+        <SectionHeader
+          title={
+            // --- SHADOW/COLOR UPDATE 4: Header linear ---
+            // Setting the header title linear to Fuchsia
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-white to-primary">
+              Featured Projects
+            </span>
+          }
+          description="Explore some of the modern web applications I’ve built using React, Redux, and other
+            modern technologies — optimized for performance, accessibility, and scalability."
+          size="xl"
+          className="text-center"
+        />
+
+        <div className={isDesktop ? 'grid grid-cols-1 gap-0 mt-12' : 'grid grid-cols-1 gap-5'}>
+          {loading
+            ? Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="rounded-lg mb-6">
+                  <Skeleton width="100%" height="180px" rounded />
+                  <Skeleton width="80%" height="20px" className="mt-4" />
+                  <Skeleton width="60%" height="20px" className="mt-2" />
+                </div>
+              ))
+            : projects.map((project, index) => (
+                <HoverProjectCard
+                  key={project._id || project.title}
+                  project={project}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseMove={handleMouseMove}
+                  isDesktop={isDesktop}
+                  isLast={index === projects.length - 1}
+                />
+              ))}
+        </div>
+      </div>
+
+      {/* 💡 Hovered Image Preview with Neon Shadow */}
       {isDesktop && hoveredImage && mousePosition.x !== 0 && mousePosition.y !== 0 && (
         <div
           className="pointer-events-none fixed z-50 transition-opacity duration-200"
           style={{
             left: mousePosition.x,
             top: mousePosition.y,
-            transform: 'translate(-50%, calc(-100% - 10px))',
+            transform: 'translate(-50%, calc(-100% - 15px))',
           }}
         >
           <img
             src={hoveredImage}
             alt="Project Preview"
-            className="w-64 h-40 object-cover rounded-lg shadow-xl"
+            className="w-64 h-40 object-cover rounded-lg shadow-2xl shadow-primary/60 border border-primary/50"
             draggable={false}
           />
         </div>

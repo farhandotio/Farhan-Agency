@@ -16,18 +16,20 @@ const SectionHeader = ({ title, description, size = 'lg', className = '' }) => {
   };
 
   return (
-    <header className={`mb-16 md:mb-24 text-center lg:text-left ${className}`}>
+    <header
+      className={`mb-16 md:mb-24 text-center bg-clip-text text-transparent bg-linear-to-r from-text to-primary ${className}`}
+    >
       <h2
-        className={`${titleSizes[size]} md:${titleSizes[size]} font-extrabold text-text mb-8 leading-tight tracking-tight`}
+        className={`${titleSizes[size]} md:${titleSizes[size]} font-extrabold mb-8 leading-tight tracking-tight bg-clip-text text-transparent bg-linear-to-r from-text to-primary`}
       >
         {title}
       </h2>
 
-      {description && (
-        <p className={`${descSizes[size]} text-mutedText max-w-4xl mx-auto lg:mx-0`}>
-          {description}
-        </p>
-      )}
+      <div className="w-full">
+        {description && (
+          <p className={`${descSizes[size]} text-mutedText mx-auto max-w-4xl`}>{description}</p>
+        )}
+      </div>
     </header>
   );
 };

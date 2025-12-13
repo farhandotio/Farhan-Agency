@@ -1,17 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'FoodPanda';
+  src: url('/fonts/Food-panda.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @theme {
-  --color-secondary: #ff6a00;
-  --color-primary: #0da34e;
+  --color-secondary: #A800B7;
+  --color-primary: #007595;
   --color-bg: #0f0f0f;
   --color-cardBg: #111;
   --color-circleBg: #cc9f66;
   --color-text: #e5e7eb;
 
   --color-border: #2d2d2d;
-  --color-outline: #0da34e;
+  --color-outline: #007595;
 
   --color-mutedText: #9ca3af;
   --color-inputBg: #1f1f1f;
@@ -21,20 +28,21 @@
   --color-warning: #eab308;
   --color-warningBg: #ffae0009;
 
-  --color-hoverSecondary: #ff6200;
-  --color-hoverPrimary: #0ac25a;
+  --color-hoverPrimary: #1494b7;
+  --color-hoverSecondary: #c621d5;
   --color-hoverCardBg: #1f1f1f;
 
-  --font-montserrat: "Montserrat";
-  --font-raleway: "Raleway", sans-serif;
+  --font-montserrat: 'Montserrat';
+  --font-raleway: 'Raleway', sans-serif;
+  --font-panda: 'FoodPanda', sans-serif;
 }
 
 .light {
-  --color-secondary: #ff6a00;
   --color-bg: #ffffff;
-  --color-cardBg: #f1fff1;
+  --color-cardBg: #f1fff1;  
   --color-text: #010101;
 
+  
   --color-border: #d1d5db;
 
   --color-mutedText: #2c2d2f;
@@ -45,12 +53,10 @@
   --color-request: #facc15;
   --color-accept: #3b82f6;
   --color-progress: #6366f1;
-  
+
   --color-warning: #ca8a04;
   --color-warningBg: #ffae0009;
 
-  --color-hoverPrimary: #0ac25a;
-  --color-hoverSecondary: #ff6200;
   --color-hoverCardBg: #e5e7eb;
 }
 
@@ -60,7 +66,12 @@ body {
   font-family: var(--font-montserrat);
   cursor: none;
 }
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-raleway);
 }
 .input,
