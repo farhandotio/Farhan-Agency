@@ -128,19 +128,19 @@ const Navbar = () => {
           BACKDROP (ONLY WHEN OPEN)
       ========================= */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-black/40 z-999" onClick={() => setMenuOpen(false)} />
+        <div className="fixed inset-0 bg-black/80 z-999" onClick={() => setMenuOpen(false)} />
       )}
 
       {/* =========================
           MOBILE DRAWER
       ========================= */}
       <aside
-        className={`fixed top-20 right-0 h-screen w-full sm:w-[60%] z-999
+        className={`fixed top-0 right-0 h-screen w-full sm:w-[60%] z-999
         p-5 transform transition-transform duration-500 ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="p-5 bg-bg/60 backdrop-blur-2xl rounded-2xl border border-border h-full">
+        <div className="p-5 bg-bg/60 backdrop-blur-2xl rounded-2xl border border-border h-fit">
           <div className="flex justify-between items-center pb-8">
             <Logo />
             <button
@@ -170,7 +170,7 @@ const Navbar = () => {
             text={user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
             url={profileLink}
             size="lg"
-            className="shadow-lg shadow-primary/40"
+            className="shadow-lg rounded-md shadow-primary/40"
           />
         </div>
       </aside>

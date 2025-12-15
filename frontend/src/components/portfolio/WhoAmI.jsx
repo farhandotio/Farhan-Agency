@@ -37,7 +37,7 @@ const WhoAmI = () => {
             title="Who I Am"
             description="I’m MD Farhan Sadik, a Fullstack Developer passionate about building modern, scalable, and beautiful web applications."
             size="xl"
-            className="text-left ml-0"
+            className="md:text-left md:ml-0"
           />
 
           <p className="text-mutedText leading-relaxed text-lg">
