@@ -1,28 +1,29 @@
 // File: MainRoutes.jsx
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import Portfolio from "../pages/Portfolio";
-import About from "../pages/About";
-import Services from "../pages/Services";
-import ServiceDetailsPage from "../pages/ServiceDetailsPage";
-import Projects from "../pages/Projects";
-import Process from "../pages/Process";
-import Contact from "../pages/Contact";
-import Profile from "../pages/client/Profile";
-import Login from "../pages/auth/Login";
-import Register from "../pages/auth/Register";
+import Portfolio from '../pages/Portfolio';
+import About from '../pages/About';
+import Services from '../pages/Services';
+import ServiceDetailsPage from '../pages/ServiceDetailsPage';
+import Projects from '../pages/Projects';
+import Process from '../pages/Process';
+import Contact from '../pages/Contact';
+import Profile from '../pages/client/Profile';
+import Login from '../pages/auth/Login';
+import Register from '../pages/auth/Register';
 
-import Admin from "../pages/admin/Admin";
+import Admin from '../pages/admin/Admin';
 
 // Admin child pages
-import Dashboard from "../pages/admin/Dashboard";
-import Users from "../pages/admin/Users";
-import Orders from "../pages/admin/Orders";
-import ServicesAdmin from "../pages/admin/Services";
-import ProjectsAdmin from "../pages/admin/Projects";
-import CreateProject from "../pages/admin/CreateProject";
-import CreateService from "../pages/admin/CreateService";
+import Dashboard from '../pages/admin/Dashboard';
+import Users from '../pages/admin/Users';
+import Orders from '../pages/admin/Orders';
+import ServicesAdmin from '../pages/admin/Services';
+import ProjectsAdmin from '../pages/admin/Projects';
+import CreateProject from '../pages/admin/CreateProject';
+import CreateService from '../pages/admin/CreateService';
+import NotFound from '../pages/NotFound';
 
 const MainRoutes = () => {
   return (
@@ -56,7 +57,7 @@ const MainRoutes = () => {
       </Route>
 
       {/* Fallback */}
-      <Route path="*" element={<div>Page Not Found</div>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

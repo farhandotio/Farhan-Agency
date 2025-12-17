@@ -103,11 +103,23 @@ const Navbar = () => {
                     </NavLink>
                   </li>
                 ))}
+                <li>
+                  <NavLink
+                    to={profileLink}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'text-primary font-semibold border-b-2 border-primary pb-1'
+                        : 'text-gray-400 hover:text-primary transition'
+                    }
+                  >
+                    {user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
+                  </NavLink>
+                </li>
               </ul>
 
               <PrimaryButton
-                text={user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
-                url={profileLink}
+                text={'Book A Call'}
+                url={'/cta'}
                 className="rounded-full min-w-32 shadow-lg shadow-primary/40"
               />
             </nav>
@@ -164,11 +176,20 @@ const Navbar = () => {
                 </NavLink>
               </li>
             ))}
+            <li>
+              <NavLink
+                to={profileLink}
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) => (isActive ? 'text-primary' : 'text-gray-400')}
+              >
+                {user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
+              </NavLink>
+            </li>
           </ul>
 
           <PrimaryButton
-            text={user ? (user.role === 'admin' ? 'ADMIN' : 'PROFILE') : 'LOGIN'}
-            url={profileLink}
+            text={'Book A Call'}
+            url={'/cta'}
             size="lg"
             className="shadow-lg rounded-md shadow-primary/40"
           />

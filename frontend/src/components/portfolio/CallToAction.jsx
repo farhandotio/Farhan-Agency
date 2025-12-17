@@ -23,23 +23,17 @@ const CallToAction = () => {
           />
 
           {/* Buttons */}
-          <div className="flex justify-center gap-4 mx-auto w-fit">
-            <div className="inline-block ml-auto">
+          <div className="flex justify-center max-md:flex-col gap-4 mx-auto md:w-fit  md:-mt-10">
+            <div className="inline-block md:mr-auto">
+              <PrimaryButton text="Book A Call" url="contact" size="xl" className="rounded-full" />
+            </div>
+            <div className="inline-block md:ml-auto">
               <PrimaryButton
                 text="Hire Me"
                 url="contact"
-                size="lg md:xl"
-                className="rounded-lg"
+                size="xl"
+                className="rounded-full"
                 bgColor={'bg-secondary'}
-              />
-            </div>
-
-            <div className="inline-block mr-auto">
-              <PrimaryButton
-                text="Book A Call"
-                url="contact"
-                size="lg md:xl"
-                className="rounded-lg"
               />
             </div>
           </div>

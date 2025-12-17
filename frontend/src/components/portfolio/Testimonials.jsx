@@ -9,8 +9,6 @@ const testimonials = [
     id: 1,
     name: 'Afjal Hossain',
     role: 'Founder, TechVerse Solutions',
-    image:
-      'https://images.unsplash.com/photo-1585807515950-bc46d934c28b?q=80&w=870&auto=format&fit=crop',
     message:
       'Farhan didn’t just redesign our website, he restructured the entire frontend for performance and scalability. Page load time dropped significantly, and the UI finally feels premium and intentional.',
     rating: 5,
@@ -20,8 +18,6 @@ const testimonials = [
     id: 2,
     name: 'Sarah Ahmed',
     role: 'Marketing Lead, PureDrop',
-    image:
-      'https://images.unsplash.com/photo-1543933573-1e0a7578328f?q=80&w=459&auto=format&fit=crop',
     message:
       'What impressed me most was Farhan’s understanding of brand identity. The dark UI, smooth animations, and interactive elements aligned perfectly with our product vision.',
     rating: 5,
@@ -31,8 +27,6 @@ const testimonials = [
     id: 3,
     name: 'Rafiul Islam',
     role: 'Co-Founder, DripNest',
-    image:
-      'https://images.unsplash.com/photo-1596075780750-81249df16d19?q=80&w=387&auto=format&fit=crop',
     message:
       'Communication was clear, timelines were respected, and every design decision had a reason behind it. The final product felt polished and production-ready.',
     rating: 4.9,
@@ -42,8 +36,6 @@ const testimonials = [
     id: 4,
     name: 'Nafisa Rahman',
     role: 'Product Manager, Serve Studio',
-    image:
-      'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=387&auto=format&fit=crop',
     message:
       'Farhan’s workflow is very structured. From wireframes to final deployment, everything was transparent. It made collaboration extremely smooth.',
     rating: 5,
@@ -55,7 +47,7 @@ const Testimonials = () => {
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="relative py-20 lg:py-30 p-5 md:p-7 lg:p-10 text-white overflow-hidden" // text-text changed to text-white
+      className="relative py-20 lg:py-30 p-5 md:p-7 lg:p-10 text-text overflow-hidden" // text-text changed to text-text
     >
       {/* 🌟 Background Lighting Effect Layer */}
       <div className="absolute inset-0 z-0 opacity-15 pointer-events-none">
@@ -66,7 +58,7 @@ const Testimonials = () => {
       <div className="relative z-10 max-w-[1900px] mx-auto">
         <SectionHeader
           title={
-            <span className="bg-clip-text text-transparent bg-linear-to-r from-white to-primary">
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-text to-primary">
               What clients say about me
             </span>
           }
@@ -104,22 +96,13 @@ const Testimonials = () => {
               ></div>
 
               <div className="flex max-md:flex-col items-start gap-5">
-                <img
-                  src={t.image}
-                  alt={`${t.name} avatar`}
-                  loading="lazy"
-                  className={`w-16 h-16 rounded-full object-cover ring-2 
-                    ${t.glowColor === 'primary' ? 'ring-primary/50' : 'ring-fuchsia-500/50'}
-                    group-hover:ring-offset-2 ring-offset-bg transition-all duration-300`}
-                />
-
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-xl font-bold leading-tight text-white group-hover:text-primary transition-colors duration-300">
+                      <h3 className="text-xl font-bold leading-tight text-text group-hover:text-primary transition-colors duration-300">
                         {t.name}
                       </h3>
-                      <p className="text-sm text-gray-400 mt-1">{t.role}</p>
+                      <p className="text-sm text-mutedText mt-1">{t.role}</p>
                     </div>
 
                     <div className="flex flex-col items-end max-md:hidden">
@@ -140,7 +123,7 @@ const Testimonials = () => {
                   </div>
 
                   {/* Message: Increased font size for better readability */}
-                  <p className="mt-5 text-gray-300 max-w-50 md:max-w-sm text-base leading-relaxed italic">
+                  <p className="mt-5 text-mutedText max-w-50 md:max-w-sm text-base leading-relaxed italic">
                     <span
                       className={`text-2xl font-serif mr-1 ${
                         t.glowColor === 'primary' ? 'text-primary' : 'text-secondary'
@@ -174,7 +157,7 @@ const Testimonials = () => {
         </div>
 
         {/* Optional: Add a subtle scroll indicator for overflow-x-auto */}
-        <p className="text-center text-gray-500 text-sm mt-8 animate-pulse">
+        <p className="text-center text-mutedText text-sm mt-8 animate-pulse">
           Scroll to see more reviews &rarr;
         </p>
       </div>

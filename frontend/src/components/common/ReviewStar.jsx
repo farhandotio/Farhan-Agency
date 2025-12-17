@@ -51,10 +51,10 @@ const ReviewStar = ({ value = 5, label = "", className = "" }) => {
         if (idx <= fullStars) return <Star key={i} filled />;
         if (idx === fullStars + 1 && hasHalf) {
           return (
-            <span key={i} className="relative inline-block w-4 h-4" aria-hidden="true">
+            <span key={i} className="relative inline-block w-3 h-3" aria-hidden="true">
               <svg
-                width="16"
-                height="16"
+                width="12"
+                height="12"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
                 className="text-yellow-400 absolute left-0 top-0"
@@ -75,8 +75,8 @@ const ReviewStar = ({ value = 5, label = "", className = "" }) => {
               </svg>
 
               <svg
-                width="16"
-                height="16"
+                width="12"
+                height="12"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
                 className="text-gray-600 absolute left-0 top-0"
@@ -96,7 +96,7 @@ const ReviewStar = ({ value = 5, label = "", className = "" }) => {
       })}
 
       {/* Numeric value (keeps your current design) */}
-      <span className="text-sm ml-1 md:ml-2 text-mutedText font-medium" aria-hidden="true">
+      <span className="text-xs ml-1 md:ml-2 text-mutedText font-medium" aria-hidden="true">
         {value}
       </span>
     </div>

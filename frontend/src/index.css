@@ -10,7 +10,7 @@
 }
 
 @theme {
-  --color-secondary: #A800B7;
+  --color-secondary: #a800b7;
   --color-primary: #007595;
   --color-bg: #0f0f0f;
   --color-cardBg: #111;
@@ -39,10 +39,9 @@
 
 .light {
   --color-bg: #ffffff;
-  --color-cardBg: #f1fff1;  
+  --color-cardBg: #f1fff1;
   --color-text: #010101;
 
-  
   --color-border: #d1d5db;
 
   --color-mutedText: #2c2d2f;

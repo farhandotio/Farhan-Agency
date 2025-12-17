@@ -103,15 +103,25 @@ const HeroSection = () => {
             ref={pTextRef}
             className="mt-6 text-xl md:text-2xl leading-relaxed text-mutedText will-change-transform"
           >
-            I build modern, high-performance web products that help brands grow and convert users.
+            I build fast, modern & scalable web apps for startups & businesses.
           </p>
 
-          <div ref={buttonRef} className="md:mt-8 mt-5 inline-block will-change-transform">
+          <div
+            ref={buttonRef}
+            className="md:mt-8 mt-5 inline-flex max-md:flex max-md:flex-col gap-5 will-change-transform"
+          >
             <PrimaryButton
               text="View My Work"
               href="#projects"
               size="xl"
-              className="rounded-lg shadow-lg shadow-primary/50"
+              className="rounded-full shadow-lg shadow-primary/50"
+            />
+            <PrimaryButton
+              text="Download Resume"
+              href="/resume/Resume.pdf"
+              size="xl"
+              bgColor={'bg-secondary'}
+              className="rounded-full shadow-lg shadow-primary/50"
             />
           </div>
         </div>

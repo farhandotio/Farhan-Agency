@@ -22,7 +22,9 @@ const PrimaryButton = ({
       ? 'h-14 px-10 text-lg'
       : 'h-10 px-6 text-sm';
 
-  const baseClasses = `relative inline-flex items-center gap-3 overflow-hidden group font-semibold justify-center text-pText whitespace-nowrap ${bgColor} hover:from-primary hover:to-secondary transition-colors w-full cursor-pointer shadow-lg shadow-primary/50 ${sizeClasses} ${className}`;
+  const baseClasses = `relative inline-flex items-center gap-3 overflow-hidden group font-semibold justify-center text-pText whitespace-nowrap ${bgColor} hover:from-primary hover:to-secondary transition-colors w-full cursor-pointer shadow-lg ${
+    bgColor === 'bg-primary' ? 'shadow-primary/50' : 'shadow-secondary/50'
+  } ${sizeClasses} ${className}`;
 
   const innerSpanClasses = `absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-linear-to-r from-transparent via-white/60 to-transparent pointer-events-none`;
 
