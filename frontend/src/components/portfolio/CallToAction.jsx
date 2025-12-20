@@ -25,11 +25,16 @@ const CallToAction = () => {
           {/* Buttons */}
           <div className="flex justify-center max-md:flex-col gap-4 mx-auto md:w-fit  md:-mt-10">
             <div className="inline-block md:mr-auto">
-              <PrimaryButton text="Book A Call" url="contact" size="xl" className="rounded-full" />
+              <PrimaryButton
+                text="Book A Call"
+                url="/bookacall"
+                size="xl"
+                className="rounded-full"
+              />
             </div>
             <div className="inline-block md:ml-auto">
               <PrimaryButton
-                text="Hire Me"
+                text="Start A Project"
                 url="contact"
                 size="xl"
                 className="rounded-full"

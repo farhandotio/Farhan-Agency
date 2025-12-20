@@ -119,7 +119,7 @@ const Navbar = () => {
 
               <PrimaryButton
                 text={'Book A Call'}
-                url={'/cta'}
+                url={'/bookacall'}
                 className="rounded-full min-w-32 shadow-lg shadow-primary/40"
               />
             </nav>
@@ -189,7 +189,7 @@ const Navbar = () => {
 
           <PrimaryButton
             text={'Book A Call'}
-            url={'/cta'}
+            url={'/bookacall'}
             size="lg"
             className="shadow-lg rounded-md shadow-primary/40"
           />

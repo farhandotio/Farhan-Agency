@@ -24,6 +24,7 @@ import ProjectsAdmin from '../pages/admin/Projects';
 import CreateProject from '../pages/admin/CreateProject';
 import CreateService from '../pages/admin/CreateService';
 import NotFound from '../pages/NotFound';
+import BookACall from '../pages/BookACall';
 
 const MainRoutes = () => {
   return (
@@ -38,6 +39,7 @@ const MainRoutes = () => {
       <Route path="/projects/:id" element={<Projects />} />
       <Route path="/process" element={<Process />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/bookacall" element={<BookACall />} />
 
       {/* Auth routes */}
       <Route path="/login" element={<Login />} />

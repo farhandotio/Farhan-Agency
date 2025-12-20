@@ -18,7 +18,7 @@
   --color-text: #e5e7eb;
 
   --color-border: #1f1f1f;
-  --color-outline: #007595;
+  --color-outline: #ff2c2c;
 
   --color-mutedText: #bbb;
   --color-inputBg: #1f1f1f;
@@ -74,30 +74,82 @@ h5,
 h6 {
   font-family: var(--font-roboto);
 }
+/* 1. Base Styles */
 .input,
 .textarea,
 .select {
   background-color: var(--color-inputBg);
-  color: var(--color-text);
+  color: var(--color-text) !important; 
   border: 1px solid var(--color-border);
   transition: all 0.2s;
   border-radius: 10px;
+  caret-color: var(--color-text);
 }
+
+/* 2. Focus States */
 .input:focus,
 .textarea:focus,
 .select:focus {
   border: 1px solid var(--color-outline);
   outline: 1px solid var(--color-outline);
+  color: var(--color-text) !important;
 }
 
+/* 3. Autofill Handling (The most important part for dark theme) */
 .input:-webkit-autofill,
 .textarea:-webkit-autofill,
-.select:-webkit-autofill {
-  background-color: var(--color-inputBg) !important;
-  -webkit-text-fill-color: var(--color-mutedText) !important;
+.select:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-inputBg) inset !important;
+
+  -webkit-text-fill-color: var(--color-text) !important;
+
+  /* Transition trick to prevent background flickers */
   transition: background-color 50000s ease-in-out 0s;
+
+  caret-color: var(--color-text) !important;
 }
 
+.input:invalid,
+.textarea:invalid,
+.input:not(:placeholder-shown):invalid {
+  color: var(--color-text) !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+  border-color: #ff4d4d; 
+}
+
+/* Focus state while invalid */
+.input:focus:invalid {
+  border-color: #ff4d4d !important;
+  outline-color: #ff4d4d !important;
+  caret-color: var(--color-text) !important;
+}
+
+/* 5. Placeholder Styling */
+.input::placeholder,
+.textarea::placeholder,
+.select::placeholder {
+  color: var(--color-mutedText);
+  opacity: 0.6;
+}
+
+/* For older browsers support */
+.input::-webkit-input-placeholder {
+  color: var(--color-mutedText);
+}
+.input::-moz-placeholder {
+  color: var(--color-mutedText);
+}
+.input:-ms-input-placeholder {
+  color: var(--color-mutedText);
+}
+
+/* Final Hack: Force text color one last time for autofill-invalid combo */
+input:-webkit-autofill:invalid {
+  -webkit-text-fill-color: var(--color-text) !important;
+}
 .hidden-scrollbar::-webkit-scrollbar {
   display: none;
 }
