@@ -70,9 +70,7 @@ const ProjectSection = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get(
-          'https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/projects'
-        );
+        const res = await axios.get('https://farhan-agency-eg4k.onrender.com/api/projects');
 
         const list = res.data?.projects || [];
         setProjects(list.slice(0, MAX_PROJECTS));

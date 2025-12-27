@@ -3,6 +3,7 @@ import orderReducer from "./features/order/orderSlice";
 import authReducer from "./features/auth/authSlice";
 import servicesReducer from "./features/services/servicesSlice";
 import projectsReducer from "./features/projects/projectsSlice";
+import visitorReducer from "./features/visitor/visitorSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     auth: authReducer,
     services: servicesReducer,
     projects: projectsReducer,
+    visitor: visitorReducer,
   },
 });
 

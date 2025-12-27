@@ -14,9 +14,7 @@ const Services = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get(
-          'https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/services'
-        );
+        const { data } = await axios.get('https://farhan-agency-eg4k.onrender.com/api/services');
         setServices(data.data || data || []);
       } catch (err) {
         console.error('Error fetching services:', err);

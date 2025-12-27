@@ -12,9 +12,7 @@ const ServiceSection = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get(
-          'https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/services'
-        );
+        const { data } = await axios.get('https://farhan-agency-eg4k.onrender.com/api/services');
         // Maximum 5 services
         setServices((data.data || data).slice(0, 5));
       } catch (err) {

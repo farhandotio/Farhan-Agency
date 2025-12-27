@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/projects';
+const API_URL = 'https://farhan-agency-eg4k.onrender.com/api/projects';
 
 // GET /projects?search=&page=&limit=&sort=
 export const fetchProjectsApi = async (params = {}) => {

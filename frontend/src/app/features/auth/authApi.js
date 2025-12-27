@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/auth';
+const API_BASE = 'https://farhan-agency-eg4k.onrender.com/api/auth';
 
 const instance = axios.create({
   baseURL: API_BASE,

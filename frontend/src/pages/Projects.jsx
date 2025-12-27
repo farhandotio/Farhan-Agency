@@ -82,9 +82,7 @@ const Projects = () => {
     async function fetchProject() {
       try {
         setLoading(true);
-        const res = await axios.get(
-          'https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/projects'
-        );
+        const res = await axios.get('https://farhan-agency-eg4k.onrender.com/api/projects');
         if (!cancelled) setProjects(res.data.projects || []);
       } catch (err) {
         if (!cancelled) setError('Failed to load projects. Please try again.');

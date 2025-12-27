@@ -18,7 +18,7 @@ const ServiceDetailsPage = () => {
     const fetchService = async () => {
       try {
         const { data } = await axios.get(
-          `https://excited-lori-farhansadik-d2cb758b.koyeb.app/api/services/${slug}`
+          `https://farhan-agency-eg4k.onrender.com/api/services/${slug}`
         );
         setService(data.data || data);
         setLoading(false);

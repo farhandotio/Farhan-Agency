@@ -13,10 +13,13 @@ import Footer from './components/common/Footer';
 import SmoothScroll from './components/common/SmoothScroll';
 import ScrollToTop from './components/common/ScrollToTop';
 import CursorEffect from './components/common/CursorEffect';
+import Tracker from './components/common/Tracker';
+
 
 const AppWrapper = () => {
   return (
     <BrowserRouter>
+      <Tracker />
       <App />
     </BrowserRouter>
   );
